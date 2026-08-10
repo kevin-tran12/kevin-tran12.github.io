@@ -1,0 +1,163 @@
+---
+import { experience, credentials } from '../data/site';
+---
+
+<section id="experience" class="section">
+	<div class="wrap">
+		<div class="section-head">
+			<span class="eyebrow">03</span>
+			<h2>Experience</h2>
+		</div>
+
+		<ol class="roles">
+			{
+				experience.map((role) => (
+					<li class="role">
+						<div class="role__meta">
+							<p class="role__period">{role.period}</p>
+						</div>
+						<div class="role__body">
+							<h3 class="role__title">
+								{role.title}<span class="sep" aria-hidden="true"> · </span><span
+									class="role__org">{role.org}</span
+								>
+							</h3>
+							<ul class="role__bullets">
+								{role.bullets.map((b) => (
+									<li>{b}</li>
+								))}
+							</ul>
+						</div>
+					</li>
+				))
+			}
+		</ol>
+
+		<h3 class="creds__title">Certifications & education</h3>
+		<ul class="creds">
+			{
+				credentials.map((c) => (
+					<li class="card cred">
+						<h4>{c.title}</h4>
+						<p>
+							{c.org} <span class="cred__period">· {c.period}</span>
+						</p>
+					</li>
+				))
+			}
+		</ul>
+	</div>
+</section>
+
+<style>
+	.roles {
+		list-style: none;
+		margin: 0;
+		display: grid;
+		gap: 2.75rem;
+	}
+
+	.role {
+		display: grid;
+		grid-template-columns: 12rem 1fr;
+		gap: 1.5rem;
+	}
+
+	.role__period {
+		font-family: var(--font-mono);
+		font-size: 0.8125rem;
+		color: var(--text-faint);
+		padding-top: 0.2rem;
+	}
+
+	.role__title {
+		font-size: 1.0625rem;
+	}
+
+	.role__org {
+		color: var(--accent);
+		font-weight: 550;
+	}
+
+	.role__bullets {
+		list-style: none;
+		margin: 1rem 0 0;
+		display: grid;
+		gap: 0.7rem;
+		color: var(--text-dim);
+		font-size: 0.9375rem;
+	}
+
+	.role__bullets li {
+		position: relative;
+		padding-left: 1.15rem;
+		line-height: 1.6;
+	}
+
+	.role__bullets li::before {
+		content: '';
+		position: absolute;
+		left: 0;
+		top: 0.62em;
+		width: 5px;
+		height: 5px;
+		border-radius: 50%;
+		background: var(--border-strong);
+	}
+
+	/* The two-column layout collapses well before the nav does — the period
+	   column is dead weight once the text gets narrow. */
+	@media (max-width: 46rem) {
+		.role {
+			grid-template-columns: 1fr;
+			gap: 0.4rem;
+		}
+
+		.role__period {
+			padding-top: 0;
+		}
+
+		/* Stacked, the separator would orphan onto the org's line. */
+		.sep {
+			display: none;
+		}
+
+		.role__org {
+			display: block;
+		}
+	}
+
+	.creds__title {
+		margin-top: 3.5rem;
+		margin-bottom: 1.1rem;
+		font-family: var(--font-mono);
+		font-size: 0.75rem;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: var(--text-faint);
+		font-weight: 600;
+	}
+
+	.creds {
+		list-style: none;
+		margin: 0;
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+		gap: 1rem;
+	}
+
+	.cred h4 {
+		font-size: 0.9375rem;
+		font-weight: 600;
+	}
+
+	.cred p {
+		margin-top: 0.3rem;
+		color: var(--text-dim);
+		font-size: 0.875rem;
+	}
+
+	.cred__period {
+		color: var(--text-faint);
+	}
+</style>

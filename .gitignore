@@ -1,0 +1,26 @@
+# build output
+dist/
+
+# dependencies
+node_modules/
+
+# generated types
+.astro/
+
+# environment
+.env
+.env.production
+
+# macOS
+.DS_Store
+
+# Windows alternate-data-stream artifacts
+*:Zone.Identifier
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# editor / agent tooling
+.claude/

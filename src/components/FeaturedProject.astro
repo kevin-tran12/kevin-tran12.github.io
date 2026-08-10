@@ -1,0 +1,165 @@
+---
+import { featuredProject as p } from '../data/site';
+import ArchitectureDiagram from './ArchitectureDiagram.astro';
+---
+
+<section id="work" class="section">
+	<div class="wrap">
+		<div class="section-head">
+			<span class="eyebrow">02</span>
+			<h2>Selected work</h2>
+		</div>
+
+		<article class="project">
+			<header class="project__head">
+				<h3 class="project__name">{p.name}</h3>
+				<p class="project__tagline">{p.tagline}</p>
+				<p class="project__desc">{p.description}</p>
+				<div class="project__links">
+					<a class="btn btn--primary" href={p.links.live} rel="noopener">Live site</a>
+					<a class="btn" href={p.links.repo} rel="noopener">Source</a>
+				</div>
+			</header>
+
+			<ArchitectureDiagram />
+
+			<ul class="highlights">
+				{
+					p.highlights.map((h) => (
+						<li class="card highlight">
+							<h4>{h.title}</h4>
+							<p>{h.body}</p>
+						</li>
+					))
+				}
+			</ul>
+
+			<div class="stack">
+				<h4 class="stack__title">Stack</h4>
+				<div class="scroll-x">
+					<table>
+						<thead>
+							<tr>
+								<th scope="col">Layer</th>
+								<th scope="col">Technology</th>
+							</tr>
+						</thead>
+						<tbody>
+							{
+								p.stack.map((row) => (
+									<tr>
+										<th scope="row">{row.layer}</th>
+										<td>{row.tech}</td>
+									</tr>
+								))
+							}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</article>
+	</div>
+</section>
+
+<style>
+	.project__name {
+		font-size: clamp(1.5rem, 1.2rem + 1.2vw, 1.9rem);
+		font-weight: 650;
+		letter-spacing: -0.02em;
+	}
+
+	.project__tagline {
+		margin-top: 0.5rem;
+		color: var(--accent);
+		font-size: 1.0625rem;
+		max-width: 52ch;
+	}
+
+	.project__desc {
+		margin-top: 1.1rem;
+		color: var(--text-dim);
+		max-width: 66ch;
+	}
+
+	.project__links {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.65rem;
+		margin-top: 1.6rem;
+	}
+
+	.highlights {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+		gap: 1rem;
+		list-style: none;
+		margin: 2.5rem 0 0;
+	}
+
+	.highlight h4 {
+		font-size: 0.9375rem;
+		font-weight: 600;
+		letter-spacing: -0.01em;
+	}
+
+	.highlight p {
+		margin-top: 0.45rem;
+		color: var(--text-dim);
+		font-size: 0.9rem;
+		line-height: 1.6;
+	}
+
+	.stack {
+		margin-top: 2.5rem;
+	}
+
+	.stack__title {
+		font-family: var(--font-mono);
+		font-size: 0.75rem;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: var(--text-faint);
+		margin-bottom: 0.9rem;
+	}
+
+	table {
+		width: 100%;
+		border-collapse: collapse;
+		font-size: 0.9rem;
+	}
+
+	thead th {
+		text-align: left;
+		padding: 0 0 0.6rem;
+		font-size: 0.75rem;
+		font-weight: 600;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--text-faint);
+		border-bottom: 1px solid var(--border-strong);
+	}
+
+	tbody th {
+		text-align: left;
+		font-weight: 600;
+		color: var(--text);
+		white-space: nowrap;
+		padding-right: 2rem;
+	}
+
+	tbody td {
+		color: var(--text-dim);
+	}
+
+	tbody th,
+	tbody td {
+		padding-block: 0.7rem;
+		border-bottom: 1px solid var(--border);
+		vertical-align: top;
+	}
+
+	tbody tr:last-child th,
+	tbody tr:last-child td {
+		border-bottom: 0;
+	}
+</style>
