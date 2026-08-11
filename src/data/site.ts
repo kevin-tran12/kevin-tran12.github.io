@@ -108,15 +108,6 @@ export const experience: Role[] = [
 			'Let content editors ship without waiting on engineering by leading the Wagtail CMS redesign — standardized card components and modular filter blocks reused across 10+ page types — and kept the codebase maintainable as it grew by decoupling business logic with Django signals.',
 		],
 	},
-	{
-		title: 'Full-Stack Software Engineer',
-		org: 'Tektone Sound & Signal Manufacturing',
-		period: 'Jan 2022 — Apr 2022',
-		bullets: [
-			'Contributed shippable sprint work within weeks of starting on a contract engagement, building responsive UI components with Tailwind CSS and Livewire inside an existing Laravel application.',
-			'Shortened turnaround on critical production bugs while still onboarding, diagnosing and resolving them through the team’s GitLab issue workflows.',
-		],
-	},
 ];
 
 export type SkillGroup = { name: string; items: string[] };
