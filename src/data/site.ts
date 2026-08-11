@@ -53,7 +53,8 @@ export const about = {
 
 export const featuredProject = {
 	name: 'MadeForSeconds',
-	tagline: 'A production recipe platform running entirely inside GCP’s always-free tier.',
+	tagline:
+		'A production recipe platform on Google Cloud that runs for a few dollars a month.',
 	description:
 		'A personal recipe site with supporter subscriptions, an admin expense ledger behind Google OAuth and a TOTP second factor, and a remote MCP server that lets Claude author and publish recipes over OAuth 2.1. I designed and built the whole thing — application, infrastructure, and delivery pipeline.',
 	links: {
@@ -67,8 +68,8 @@ export const featuredProject = {
 		{
 			title: 'Cost-aware serverless architecture',
 			points: [
-				'Cloud Run configured to scale to zero between requests',
-				'Resource allocation tuned for GCP’s always-free tier',
+				'Cloud Run configured to scale to zero, so idle time carries no compute cost',
+				'Resource allocation tuned against GCP free-tier limits; the residual spend is Cloud Storage and deploy churn, at a few cents to a few dollars a month',
 				'Automated billing circuit breaker implemented as a Cloud Function',
 			],
 		},
