@@ -142,7 +142,9 @@ import { experience, credentials } from '../data/site';
 		list-style: none;
 		margin: 0;
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+		/* 13rem keeps all four credentials on one row at full width; 15rem
+		   dropped the fourth onto a row of its own. */
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
 		gap: 1rem;
 	}
 

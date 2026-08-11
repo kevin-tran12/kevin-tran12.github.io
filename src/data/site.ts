@@ -14,7 +14,8 @@ export const hero = {
 	name: 'Kevin Tran',
 	role: 'Cloud & Platform Engineer',
 	location: 'Atlanta, GA — open to relocation',
-	badge: 'Google Cloud Associate Cloud Engineer',
+	// PCA first — it is the senior of the two.
+	badges: ['Google Cloud Professional Cloud Architect', 'Associate Cloud Engineer'],
 	summary:
 		'I build cloud-native systems and the pipelines that run them: Terraform-managed GCP infrastructure, containerized Python services on Cloud Run, and event-driven architectures that replace manual workflows.',
 } as const;
@@ -22,7 +23,7 @@ export const hero = {
 export const about = [
 	'Most of my day-to-day has been Python — Django and Wagtail CMS platforms, Stripe webhook integrations that automate payment processing and reporting, and Django signals used to decouple business logic across application events. Alongside that I maintain GitLab CI/CD pipelines and Dockerized services, and write the pytest and Selenium coverage that keeps them honest.',
 	'The work I care most about sits one layer down: making infrastructure reproducible. On my own projects that means Terraform-defined Cloud Run services, least-privilege IAM service accounts, and edge hosting on Cloudflare — infrastructure you can tear down and stand back up from source.',
-	'I came to engineering from a career in hospitality, by way of App Academy and computer science coursework at Georgia State. When I am not coding I am building computers, fixing cars, and snowboarding.',
+	'I came to engineering from a career in hospitality, by way of App Academy and computer science coursework at Georgia State. When I am not coding I am fixing cars, snowboarding, powerlifting, rock climbing, hiking, cooking, and traveling — if it is hands-on or outdoors, I am usually in.',
 ] as const;
 
 export type StackRow = { layer: string; tech: string };
@@ -164,6 +165,7 @@ export const skills: SkillGroup[] = [
 ];
 
 export const credentials = [
+	{ title: 'Professional Cloud Architect', org: 'Google Cloud', period: 'Certified' },
 	{ title: 'Associate Cloud Engineer', org: 'Google Cloud', period: 'Certified' },
 	{ title: 'Full-Stack Software Engineering', org: 'App Academy', period: '2021' },
 	{ title: 'Computer Science coursework', org: 'Georgia State University', period: '2018 — 2020' },

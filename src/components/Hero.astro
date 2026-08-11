@@ -15,7 +15,7 @@ const github = contact.socials.find((s) => s.name === 'GitHub');
 				<span class="dot" aria-hidden="true"></span>
 				{hero.location}
 			</li>
-			<li class="chip">{hero.badge}</li>
+			{hero.badges.map((badge) => <li class="chip">{badge}</li>)}
 		</ul>
 
 		<div class="hero__actions">
