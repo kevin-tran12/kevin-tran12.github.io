@@ -90,10 +90,10 @@ export const experience: Role[] = [
 		org: 'MadeForSeconds',
 		period: 'Jan 2026 — Present',
 		bullets: [
-			'Architected and deployed multi-cloud infrastructure with Terraform — serverless compute on Cloud Run, edge hosting on Cloudflare Pages, Cloud Storage for media, and Firestore for real-time state — reducing environment setup from days to hours using agentic engineering workflows.',
-			'Enforced least-privilege access across every cloud resource through granular GCP IAM roles and dedicated service accounts, with all secrets held in Secret Manager.',
-			'Built the delivery pipeline on GitHub Actions and Cloud Build with static analysis in CI and 277 tests across pytest, Vitest, and Playwright gating every deploy.',
-			'Kept running costs at effectively zero through scale-to-zero compute, free-tier-tuned resource allocation, and an automated billing circuit breaker implemented as a Cloud Function.',
+			'Took a production platform from nothing to live on a budget of effectively zero, using scale-to-zero Cloud Run, free-tier-tuned resource allocation, and an automated billing circuit breaker as a Cloud Function that cuts spend off before it escapes the free tier.',
+			'Made the whole environment rebuildable from source rather than reconstructable from memory, defining Cloud Run, Firestore, Cloud Storage, Secret Manager, Artifact Registry, and Cloud Functions in Terraform — which brought setup down from days to hours with agentic engineering workflows.',
+			'Contained blast radius before it mattered by scoping every resource to least-privilege IAM with dedicated service accounts and keeping all secrets in Secret Manager.',
+			'Made releases safe to run unattended with GitHub Actions and Cloud Build, static analysis in CI, and 277 tests across pytest, Vitest, and Playwright gating every deploy.',
 		],
 	},
 	{
@@ -101,11 +101,11 @@ export const experience: Role[] = [
 		org: 'Novogradac & Company LLP',
 		period: 'Apr 2022 — Feb 2026',
 		bullets: [
-			'Root-caused Terraform version drift between v1 and v2 across environments to restore a consistent infrastructure state, and maintained GitLab CI/CD pipelines — including scheduled jobs and Dockerized service deployments — that eliminated dev/staging inconsistency.',
-			'Owned a Thought Industries LMS and Stripe billing integration end-to-end, automating payment processing and report generation and consolidating both sources into a single view of customer activity.',
-			'Ran an Elasticsearch migration and an end-to-end Google Maps API deprecation migration, building custom replacements where the vendor path did not cover existing behavior.',
-			'Implemented the application security layer — CORS, CSP, and XSS protections — alongside Django application logging and pandas-based data pipelines.',
-			'Built and maintained the Django/Wagtail platform and its REST APIs, using pre/post signals to decouple business logic across application events, with pytest and Selenium coverage.',
+			'Restored trustworthy deploys for a 20-person engineering team by root-causing Terraform version drift between v1 and v2 across environments, then held dev and staging in parity through scheduled GitLab CI/CD pipelines and Dockerized services — removing a standing class of environment-specific failures.',
+			'Gave the finance team one view of customer activity instead of two systems to reconcile by hand, owning the Thought Industries LMS and Stripe billing integration end-to-end and automating the payment processing and reporting behind it.',
+			'Carried the platform through two migrations without disrupting users: search moved to Elasticsearch, and the site came off deprecated Google Maps APIs end-to-end — including custom replacements where the vendor upgrade path would have dropped existing behavior.',
+			'Reduced the attack surface of a public-facing platform at a national accounting firm by implementing its CORS, CSP, and XSS protection layer, and made production incidents diagnosable through Django application logging.',
+			'Let content editors ship without waiting on engineering by leading the Wagtail CMS redesign — standardized card components and modular filter blocks reused across 10+ page types — and kept the codebase maintainable as it grew by decoupling business logic with Django signals.',
 		],
 	},
 	{
@@ -113,8 +113,8 @@ export const experience: Role[] = [
 		org: 'Tektone Sound & Signal Manufacturing',
 		period: 'Jan 2022 — Apr 2022',
 		bullets: [
-			'Developed responsive UI components with Tailwind CSS and Livewire inside a Laravel application, delivering production-ready features against sprint requirements.',
-			'Diagnosed and resolved critical production issues through GitLab workflows, improving bug turnaround during onboarding.',
+			'Contributed shippable sprint work within weeks of starting on a contract engagement, building responsive UI components with Tailwind CSS and Livewire inside an existing Laravel application.',
+			'Shortened turnaround on critical production bugs while still onboarding, diagnosing and resolving them through the team’s GitLab issue workflows.',
 		],
 	},
 ];
