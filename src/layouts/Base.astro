@@ -1,0 +1,150 @@
+---
+import '../styles/global.css';
+import { meta, nav, hero } from '../data/site';
+
+const year = new Date().getFullYear();
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>{meta.title}</title>
+		<meta name="description" content={meta.description} />
+		<link rel="canonical" href={meta.url} />
+		<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+		<meta name="theme-color" content="#0a0e13" media="(prefers-color-scheme: dark)" />
+		<meta name="theme-color" content="#fbfcfd" media="(prefers-color-scheme: light)" />
+
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content={meta.title} />
+		<meta property="og:description" content={meta.description} />
+		<meta property="og:url" content={meta.url} />
+		<meta name="twitter:card" content="summary" />
+		<meta name="generator" content={Astro.generator} />
+	</head>
+
+	<body>
+		<a class="skip" href="#main">Skip to content</a>
+
+		<header class="nav">
+			<div class="nav__inner wrap">
+				<a class="nav__brand" href="#top">{hero.name}</a>
+				<nav aria-label="Sections">
+					<ul class="nav__list">
+						{
+							nav.map((item) => (
+								<li>
+									<a href={item.href}>{item.label}</a>
+								</li>
+							))
+						}
+					</ul>
+				</nav>
+			</div>
+		</header>
+
+		<main id="main">
+			<slot />
+		</main>
+
+		<footer class="footer">
+			<div class="wrap footer__inner">
+				<span>© {year} {hero.name}</span>
+				<span>Built with Astro · deployed from GitHub Actions</span>
+			</div>
+		</footer>
+	</body>
+</html>
+
+<style>
+	.skip {
+		position: absolute;
+		left: -9999px;
+		top: 0;
+		z-index: 100;
+		padding: 0.7rem 1.1rem;
+		background: var(--bg-elev);
+		border: 1px solid var(--accent-border);
+		border-radius: var(--radius-sm);
+		text-decoration: none;
+	}
+
+	.skip:focus-visible {
+		left: 1rem;
+		top: 1rem;
+	}
+
+	.nav {
+		position: sticky;
+		top: 0;
+		z-index: 50;
+		background: color-mix(in srgb, var(--bg) 82%, transparent);
+		backdrop-filter: blur(12px);
+		border-bottom: 1px solid var(--border);
+	}
+
+	.nav__inner {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1.5rem;
+		min-height: 3.75rem;
+	}
+
+	.nav__brand {
+		font-weight: 600;
+		font-size: 0.95rem;
+		letter-spacing: -0.01em;
+		color: var(--text);
+		text-decoration: none;
+		white-space: nowrap;
+	}
+
+	.nav__brand:hover {
+		color: var(--accent);
+	}
+
+	.nav__list {
+		display: flex;
+		gap: clamp(0.75rem, 2.5vw, 1.75rem);
+		list-style: none;
+		margin: 0;
+	}
+
+	.nav__list a {
+		color: var(--text-dim);
+		text-decoration: none;
+		font-size: 0.875rem;
+	}
+
+	.nav__list a:hover {
+		color: var(--accent);
+	}
+
+	/* On narrow screens the section links would crowd the name out. */
+	@media (max-width: 34rem) {
+		.nav__list {
+			display: none;
+		}
+
+		.nav__inner {
+			justify-content: center;
+		}
+	}
+
+	.footer {
+		border-top: 1px solid var(--border);
+		padding-block: 2rem;
+		color: var(--text-faint);
+		font-size: 0.8125rem;
+	}
+
+	.footer__inner {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem 1.5rem;
+		justify-content: space-between;
+	}
+</style>

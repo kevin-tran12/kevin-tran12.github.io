@@ -1,0 +1,174 @@
+---
+import { featuredProject as p } from '../data/site';
+import ArchitectureDiagram from './ArchitectureDiagram.astro';
+---
+
+<section id="work" class="section">
+	<div class="wrap">
+		<div class="section-head">
+			<span class="eyebrow">03</span>
+			<h2>Selected work</h2>
+		</div>
+
+		<article class="project">
+			<header class="project__head">
+				<h3 class="project__name">{p.name}</h3>
+				<p class="project__tagline">{p.tagline}</p>
+				<p class="project__desc">{p.description}</p>
+
+				<p class="project__arch">
+					<span class="project__arch-label">Architecture</span>
+					{p.architecture}
+				</p>
+
+				<div class="project__links">
+					<a class="btn btn--primary" href={p.links.live} rel="noopener">Live site</a>
+					<a class="btn" href={p.links.repo} rel="noopener">Source</a>
+				</div>
+			</header>
+
+			<ArchitectureDiagram />
+
+			<ul class="highlights">
+				{
+					p.highlights.map((h) => (
+						<li class="card highlight">
+							<h4>{h.title}</h4>
+							<ul class="highlight__points">
+								{h.points.map((point) => (
+									<li>{point}</li>
+								))}
+							</ul>
+						</li>
+					))
+				}
+			</ul>
+
+			<div class="stack">
+				<h4 class="stack__title">Stack</h4>
+				<ul class="stack__chips">
+					{p.stack.map((tech) => <li class="chip">{tech}</li>)}
+				</ul>
+			</div>
+		</article>
+	</div>
+</section>
+
+<style>
+	.project__name {
+		font-size: clamp(1.5rem, 1.2rem + 1.2vw, 1.9rem);
+		font-weight: 650;
+		letter-spacing: -0.02em;
+	}
+
+	.project__tagline {
+		margin-top: 0.5rem;
+		color: var(--accent);
+		font-size: 1.0625rem;
+		max-width: 52ch;
+	}
+
+	.project__desc {
+		margin-top: 1.1rem;
+		color: var(--text-dim);
+		max-width: 66ch;
+	}
+
+	.project__arch {
+		margin-top: 1.5rem;
+		padding: 0.9rem 1.1rem;
+		border: 1px solid var(--border);
+		border-left: 2px solid var(--accent-border);
+		border-radius: var(--radius-sm);
+		background: var(--bg-elev);
+		color: var(--text-dim);
+		font-size: 0.9rem;
+		line-height: 1.6;
+		max-width: 74ch;
+	}
+
+	.project__arch-label {
+		display: block;
+		margin-bottom: 0.2rem;
+		font-family: var(--font-mono);
+		font-size: 0.6875rem;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: var(--accent);
+	}
+
+	.project__links {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.65rem;
+		margin-top: 1.6rem;
+	}
+
+	.highlights {
+		display: grid;
+		/* 21rem holds these to two columns: at three, the bulleted points wrap
+		   every few words. */
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 21rem), 1fr));
+		gap: 1rem;
+		list-style: none;
+		margin: 2.5rem 0 0;
+	}
+
+	/* An odd final card would otherwise sit beside an empty cell. */
+	.highlight:last-child:nth-child(odd) {
+		grid-column: 1 / -1;
+	}
+
+	.highlight h4 {
+		font-size: 0.9375rem;
+		font-weight: 600;
+		letter-spacing: -0.01em;
+	}
+
+	.highlight__points {
+		list-style: none;
+		margin: 0.7rem 0 0;
+		display: grid;
+		gap: 0.45rem;
+		color: var(--text-dim);
+		font-size: 0.875rem;
+	}
+
+	.highlight__points li {
+		position: relative;
+		padding-left: 1.05rem;
+		line-height: 1.55;
+	}
+
+	.highlight__points li::before {
+		content: '';
+		position: absolute;
+		left: 0;
+		top: 0.58em;
+		width: 4px;
+		height: 4px;
+		border-radius: 50%;
+		background: var(--border-strong);
+	}
+
+	.stack {
+		margin-top: 2.5rem;
+	}
+
+	.stack__title {
+		font-family: var(--font-mono);
+		font-size: 0.75rem;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: var(--text-faint);
+		margin-bottom: 0.9rem;
+	}
+
+	.stack__chips {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		list-style: none;
+		margin: 0;
+	}
+</style>

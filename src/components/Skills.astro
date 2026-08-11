@@ -1,0 +1,70 @@
+---
+import { skills } from '../data/site';
+---
+
+<section id="skills" class="section">
+	<div class="wrap">
+		<div class="section-head">
+			<span class="eyebrow">02</span>
+			<h2>Core technologies</h2>
+		</div>
+
+		<div class="groups">
+			{
+				skills.map((group) => (
+					<section class="group">
+						<h3 class="group__name">{group.name}</h3>
+						<ul class="group__items">
+							{group.items.map((item) => (
+								<li class="chip">{item}</li>
+							))}
+						</ul>
+					</section>
+				))
+			}
+		</div>
+	</div>
+</section>
+
+<style>
+	.groups {
+		display: grid;
+		gap: 2rem;
+	}
+
+	.group {
+		display: grid;
+		grid-template-columns: 12rem 1fr;
+		gap: 1.5rem;
+		align-items: start;
+	}
+
+	.group__name {
+		font-family: var(--font-mono);
+		font-size: 0.75rem;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: var(--text-faint);
+		font-weight: 600;
+		padding-top: 0.35rem;
+	}
+
+	.group__items {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		list-style: none;
+		margin: 0;
+	}
+
+	@media (max-width: 46rem) {
+		.group {
+			grid-template-columns: 1fr;
+			gap: 0.75rem;
+		}
+
+		.group__name {
+			padding-top: 0;
+		}
+	}
+</style>

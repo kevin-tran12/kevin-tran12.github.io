@@ -1,0 +1,240 @@
+---
+import { engagements, valueProposition, credentials } from '../data/site';
+---
+
+<section id="experience" class="section">
+	<div class="wrap">
+		<div class="section-head">
+			<span class="eyebrow">04</span>
+			<h2>Selected engagements & engineering initiatives</h2>
+		</div>
+
+		<div class="engagements">
+			{
+				engagements.map((e) => (
+					<article class="engagement">
+						<header class="engagement__head">
+							<h3 class="engagement__org">{e.org}</h3>
+							<p class="engagement__meta">
+								{e.role}<span class="sep" aria-hidden="true"> · </span>
+								<span class="engagement__period">{e.period}</span>
+							</p>
+							<p class="engagement__summary">{e.summary}</p>
+						</header>
+
+						<ul class="initiatives">
+							{e.initiatives.map((i) => (
+								<li class="initiative">
+									<h4>{i.title}</h4>
+									<p class="initiative__body">{i.body}</p>
+									<p class="initiative__outcome">
+										<span class="initiative__label">Outcome</span>
+										{i.outcome}
+									</p>
+								</li>
+							))}
+						</ul>
+					</article>
+				))
+			}
+		</div>
+
+		<div class="value">
+			<h3 class="value__title">Where I add the most value</h3>
+			<p class="value__statement">{valueProposition.statement}</p>
+			<ul class="value__areas">
+				{valueProposition.areas.map((area) => <li>{area}</li>)}
+			</ul>
+		</div>
+
+		<h3 class="creds__title">Certifications & education</h3>
+		<ul class="creds">
+			{
+				credentials.map((c) => (
+					<li class="card cred">
+						<h4>{c.title}</h4>
+						<p>
+							{c.org} <span class="cred__period">· {c.period}</span>
+						</p>
+					</li>
+				))
+			}
+		</ul>
+	</div>
+</section>
+
+<style>
+	.engagements {
+		display: grid;
+		gap: 4rem;
+	}
+
+	.engagement__org {
+		font-size: clamp(1.25rem, 1.1rem + 0.7vw, 1.5rem);
+	}
+
+	.engagement__meta {
+		margin-top: 0.35rem;
+		color: var(--accent);
+		font-size: 0.9375rem;
+		font-weight: 550;
+	}
+
+	.engagement__period {
+		font-family: var(--font-mono);
+		font-size: 0.8125rem;
+		color: var(--text-faint);
+		font-weight: 400;
+	}
+
+	.engagement__summary {
+		margin-top: 1rem;
+		max-width: 70ch;
+		color: var(--text-dim);
+	}
+
+	.initiatives {
+		list-style: none;
+		margin: 1.75rem 0 0;
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+		gap: 1rem;
+	}
+
+	.initiative {
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
+		background: var(--bg-elev);
+		padding: 1.35rem 1.45rem;
+		display: flex;
+		flex-direction: column;
+	}
+
+	/* An odd number of initiatives leaves the last card stranded next to an
+	   empty cell; span it instead. Self-disables at an even count. */
+	.initiative:last-child:nth-child(odd) {
+		grid-column: 1 / -1;
+	}
+
+	.initiative h4 {
+		font-size: 0.9375rem;
+		font-weight: 600;
+		letter-spacing: -0.01em;
+	}
+
+	.initiative__body {
+		margin-top: 0.55rem;
+		color: var(--text-dim);
+		font-size: 0.9rem;
+		line-height: 1.6;
+	}
+
+	.initiative__outcome {
+		/* Pinned to the bottom so the outcome lines up across a row of cards
+		   whose descriptions differ in length. */
+		margin-top: auto;
+		padding-top: 0.9rem;
+		color: var(--text-dim);
+		font-size: 0.875rem;
+		line-height: 1.6;
+	}
+
+	.initiative__label {
+		display: block;
+		margin-bottom: 0.2rem;
+		font-family: var(--font-mono);
+		font-size: 0.6875rem;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: var(--accent);
+	}
+
+	.value {
+		margin-top: 4rem;
+		padding: 1.75rem 1.85rem;
+		border: 1px solid var(--border);
+		border-left: 2px solid var(--accent-border);
+		border-radius: var(--radius);
+		background: var(--bg-elev);
+	}
+
+	.value__title {
+		font-size: 1.0625rem;
+	}
+
+	.value__statement {
+		margin-top: 0.75rem;
+		max-width: 78ch;
+		color: var(--text-dim);
+		font-size: 0.9375rem;
+	}
+
+	.value__areas {
+		list-style: none;
+		margin: 1.5rem 0 0;
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr));
+		gap: 0.6rem 1.5rem;
+		font-size: 0.9rem;
+		color: var(--text-dim);
+	}
+
+	.value__areas li {
+		position: relative;
+		padding-left: 1.15rem;
+		line-height: 1.55;
+	}
+
+	.value__areas li::before {
+		content: '';
+		position: absolute;
+		left: 0;
+		top: 0.6em;
+		width: 5px;
+		height: 5px;
+		border-radius: 50%;
+		background: var(--accent);
+	}
+
+	.creds__title {
+		margin-top: 3.5rem;
+		margin-bottom: 1.1rem;
+		font-family: var(--font-mono);
+		font-size: 0.75rem;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: var(--text-faint);
+		font-weight: 600;
+	}
+
+	.creds {
+		list-style: none;
+		margin: 0;
+		display: grid;
+		/* 13rem keeps all four credentials on one row at full width; 15rem
+		   dropped the fourth onto a row of its own. */
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+		gap: 1rem;
+	}
+
+	.cred h4 {
+		font-size: 0.9375rem;
+		font-weight: 600;
+	}
+
+	.cred p {
+		margin-top: 0.3rem;
+		color: var(--text-dim);
+		font-size: 0.875rem;
+	}
+
+	.cred__period {
+		color: var(--text-faint);
+	}
+
+	@media (max-width: 34rem) {
+		.value {
+			padding: 1.4rem 1.35rem;
+		}
+	}
+</style>

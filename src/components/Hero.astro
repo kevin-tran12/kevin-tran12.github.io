@@ -1,0 +1,89 @@
+---
+import { hero, contact } from '../data/site';
+
+const github = contact.socials.find((s) => s.name === 'GitHub');
+---
+
+<section id="top" class="hero">
+	<div class="wrap hero__inner">
+		<p class="hero__role eyebrow">{hero.role}</p>
+		<h1>{hero.name}</h1>
+		<p class="hero__summary lede">{hero.summary}</p>
+
+		<ul class="hero__facts">
+			<li class="chip">
+				<span class="dot" aria-hidden="true"></span>
+				{hero.location}
+			</li>
+			{hero.badges.map((badge) => <li class="chip">{badge}</li>)}
+		</ul>
+
+		<div class="hero__actions">
+			<a class="btn btn--primary" href={`mailto:${contact.email}`}>Get in touch</a>
+			<a class="btn" href="#work">See the work</a>
+			{github && <a class="btn" href={github.url} rel="me noopener">GitHub</a>}
+		</div>
+	</div>
+</section>
+
+<style>
+	.hero {
+		position: relative;
+		padding-block: clamp(4rem, 11vw, 8.5rem) clamp(3.5rem, 9vw, 7rem);
+		overflow: hidden;
+	}
+
+	/* Soft accent wash behind the name — decorative only. */
+	.hero::before {
+		content: '';
+		position: absolute;
+		inset: -40% 0 auto -10%;
+		height: 34rem;
+		background: radial-gradient(
+			55% 60% at 30% 50%,
+			var(--accent-soft) 0%,
+			transparent 70%
+		);
+		pointer-events: none;
+	}
+
+	.hero__inner {
+		position: relative;
+	}
+
+	.hero__role {
+		margin-bottom: 1rem;
+	}
+
+	.hero__summary {
+		max-width: 46ch;
+		margin-top: 1.5rem;
+	}
+
+	.hero__facts {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		list-style: none;
+		margin: 1.75rem 0 0;
+	}
+
+	.hero__facts .chip {
+		white-space: normal;
+	}
+
+	.dot {
+		width: 7px;
+		height: 7px;
+		border-radius: 50%;
+		background: var(--accent);
+		flex: none;
+	}
+
+	.hero__actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.65rem;
+		margin-top: 2.25rem;
+	}
+</style>

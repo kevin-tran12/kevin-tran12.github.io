@@ -1,0 +1,178 @@
+---
+/**
+ * MadeForSeconds request/dependency flow.
+ * Hand-authored inline SVG rather than build-time Mermaid: rendering Mermaid
+ * at build time pulls in a headless browser, which is far too much machinery
+ * for one static diagram.
+ */
+---
+
+<figure class="diagram">
+	<div class="scroll-x">
+		<svg viewBox="0 0 940 340" role="img" aria-labelledby="archTitle archDesc">
+			<title id="archTitle">MadeForSeconds architecture</title>
+			<desc id="archDesc">
+				Browsers reach a static React bundle on Cloudflare Pages, which calls a FastAPI
+				service on Google Cloud Run. Claude connects to the same Cloud Run service
+				directly as an MCP client. Cloud Run reads and writes Firestore, Cloud Storage,
+				and Secret Manager, and integrates with WorkOS AuthKit for OAuth 2.1, Google
+				Identity Platform, Stripe, and Upstash Redis.
+			</desc>
+
+			<defs>
+				<marker
+					id="arrowhead"
+					viewBox="0 0 10 10"
+					refX="9"
+					refY="5"
+					markerWidth="6"
+					markerHeight="6"
+					orient="auto-start-reverse"
+				>
+					<path class="arrowhead" d="M 0 0 L 10 5 L 0 10 z"></path>
+				</marker>
+			</defs>
+
+			<!-- ── Panels ─────────────────────────────────────────────── -->
+			<text class="ptitle" x="16" y="30">Clients</text>
+			<rect class="panel" x="16" y="40" width="150" height="270" rx="10"></rect>
+
+			<text class="ptitle" x="206" y="30">Cloudflare</text>
+			<rect class="panel" x="206" y="40" width="176" height="270" rx="10"></rect>
+
+			<text class="ptitle" x="422" y="30">Google Cloud — Terraform-managed</text>
+			<rect class="panel" x="422" y="40" width="250" height="270" rx="10"></rect>
+
+			<text class="ptitle" x="712" y="30">External services</text>
+			<rect class="panel" x="712" y="40" width="204" height="270" rx="10"></rect>
+
+			<!-- ── Edges (drawn under the nodes) ──────────────────────── -->
+			<path class="edge" d="M 156 127 H 214" marker-end="url(#arrowhead)"></path>
+			<path class="edge" d="M 370 127 H 428" marker-end="url(#arrowhead)"></path>
+			<path class="edge" d="M 662 127 H 718" marker-end="url(#arrowhead)"></path>
+			<path
+				class="edge"
+				d="M 156 207 H 392 Q 400 207 400 199 V 151 Q 400 143 408 143 H 428"
+				marker-end="url(#arrowhead)"
+			></path>
+			<path class="edge" d="M 547 154 V 168" marker-end="url(#arrowhead)"></path>
+
+			<!-- ── Nodes ──────────────────────────────────────────────── -->
+			<rect class="node" x="32" y="100" width="118" height="54" rx="8"></rect>
+			<text class="label" x="91" y="132">Browser</text>
+
+			<rect class="node" x="32" y="180" width="118" height="54" rx="8"></rect>
+			<text class="label" x="91" y="205">Claude</text>
+			<text class="sub" x="91" y="222">MCP client</text>
+
+			<rect class="node" x="222" y="100" width="144" height="54" rx="8"></rect>
+			<text class="label" x="294" y="125">Pages</text>
+			<text class="sub" x="294" y="142">static React · CSP · HSTS</text>
+
+			<rect class="node node--accent" x="436" y="100" width="222" height="54" rx="8"></rect>
+			<text class="label" x="547" y="125">Cloud Run</text>
+			<text class="sub" x="547" y="142">FastAPI · scales to zero</text>
+
+			<rect class="subpanel" x="436" y="176" width="222" height="122" rx="8"></rect>
+			<rect class="node" x="448" y="186" width="198" height="30" rx="6"></rect>
+			<text class="label" x="547" y="206">Firestore</text>
+			<rect class="node" x="448" y="222" width="198" height="30" rx="6"></rect>
+			<text class="label" x="547" y="242">Cloud Storage</text>
+			<rect class="node" x="448" y="258" width="198" height="30" rx="6"></rect>
+			<text class="label" x="547" y="278">Secret Manager</text>
+
+			<rect class="node" x="726" y="100" width="176" height="54" rx="8"></rect>
+			<text class="label" x="814" y="125">WorkOS AuthKit</text>
+			<text class="sub" x="814" y="142">OAuth 2.1</text>
+
+			<rect class="node" x="726" y="180" width="176" height="34" rx="6"></rect>
+			<text class="label" x="814" y="202">Identity Platform</text>
+
+			<rect class="node" x="726" y="224" width="176" height="34" rx="6"></rect>
+			<text class="label" x="814" y="246">Stripe</text>
+
+			<rect class="node" x="726" y="268" width="176" height="34" rx="6"></rect>
+			<text class="label" x="814" y="290">Upstash Redis</text>
+		</svg>
+	</div>
+	<figcaption>
+		Static assets served from the Cloudflare edge; a single Cloud Run service backs both the
+		browser API and the agent-facing MCP endpoint.
+	</figcaption>
+</figure>
+
+<style>
+	.diagram {
+		margin: 2.5rem 0 0;
+	}
+
+	svg {
+		/* Below this the labels stop being readable, so the figure scrolls
+		   sideways instead of shrinking. */
+		min-width: 680px;
+		width: 100%;
+		height: auto;
+	}
+
+	.panel {
+		fill: var(--bg-elev);
+		stroke: var(--border);
+	}
+
+	.subpanel {
+		fill: var(--bg-elev-2);
+		stroke: var(--border);
+	}
+
+	.node {
+		fill: var(--bg-elev-2);
+		stroke: var(--border-strong);
+	}
+
+	.node--accent {
+		fill: var(--accent-soft);
+		stroke: var(--accent-border);
+	}
+
+	.ptitle {
+		fill: var(--text-faint);
+		font-family: var(--font-mono);
+		font-size: 11px;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+	}
+
+	.label {
+		fill: var(--text);
+		font-family: var(--font);
+		font-size: 13px;
+		font-weight: 550;
+		text-anchor: middle;
+	}
+
+	.sub {
+		/* --text-faint would sit at ~4.2:1 against the node fill; these are
+		   11px labels, so they get the stronger dim token. */
+		fill: var(--text-dim);
+		font-family: var(--font);
+		font-size: 11px;
+		text-anchor: middle;
+	}
+
+	.edge {
+		fill: none;
+		stroke: var(--border-strong);
+		stroke-width: 1.5;
+	}
+
+	.arrowhead {
+		fill: var(--border-strong);
+	}
+
+	figcaption {
+		margin-top: 1rem;
+		color: var(--text-faint);
+		font-size: 0.8125rem;
+		max-width: 60ch;
+	}
+</style>
