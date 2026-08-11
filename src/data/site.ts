@@ -77,38 +77,113 @@ export const featuredProject = {
 	] satisfies StackRow[],
 } as const;
 
-export type Role = {
+export type Initiative = {
 	title: string;
-	org: string;
-	period: string;
-	bullets: string[];
+	body: string;
+	outcome: string;
 };
 
-export const experience: Role[] = [
+export type Engagement = {
+	org: string;
+	role: string;
+	period: string;
+	summary: string;
+	initiatives: Initiative[];
+};
+
+export const engagements: Engagement[] = [
 	{
-		title: 'Founder & Cloud Engineer',
-		org: 'MadeForSeconds',
-		period: 'Jan 2026 — Present',
-		bullets: [
-			'Took a production platform from nothing to live on a budget of effectively zero, using scale-to-zero Cloud Run, free-tier-tuned resource allocation, and an automated billing circuit breaker as a Cloud Function that cuts spend off before it escapes the free tier.',
-			'Made the whole environment rebuildable from source rather than reconstructable from memory, defining Cloud Run, Firestore, Cloud Storage, Secret Manager, Artifact Registry, and Cloud Functions in Terraform — which brought setup down from days to hours with agentic engineering workflows.',
-			'Contained blast radius before it mattered by scoping every resource to least-privilege IAM with dedicated service accounts and keeping all secrets in Secret Manager.',
-			'Made releases safe to run unattended with GitHub Actions and Cloud Build, static analysis in CI, and 277 tests across pytest, Vitest, and Playwright gating every deploy.',
+		org: 'Novogradac & Company LLP',
+		role: 'Software Engineer',
+		period: '2022 – 2026',
+		summary:
+			'Contributed to backend platform modernization efforts for an accounting and advisory organization, with a focus on API architecture, deployment reliability, workflow automation, and operational efficiency.',
+		initiatives: [
+			{
+				title: 'API & Integration Modernization',
+				body: 'Designed and delivered authenticated REST APIs and search capabilities that provided a consistent integration layer for internal systems and external consumers.',
+				outcome:
+					'Improved maintainability of backend services and reduced the need for ad-hoc data access patterns.',
+			},
+			{
+				title: 'Workflow Decoupling & Maintainability',
+				body: 'Refactored tightly coupled business processes into event-driven workflows using Django signals and asynchronous application events.',
+				outcome:
+					'Simplified feature enhancements and reduced the impact of changes across dependent application components.',
+			},
+			{
+				title: 'Production Release Stability',
+				body: 'Managed PostgreSQL schema evolution and deployment sequencing across multiple production releases in a live production environment.',
+				outcome:
+					'Maintained data integrity and minimized operational risk during application upgrades.',
+			},
+			{
+				title: 'Billing & Reporting Automation',
+				body: 'Integrated Stripe APIs and webhook-driven event processing to support stakeholder and partner reporting workflows.',
+				outcome:
+					'Reduced manual reconciliation effort and improved operational visibility into billing activity.',
+			},
+			{
+				title: 'Deployment & Environment Consistency',
+				body: 'Supported Dockerized services and GitLab CI/CD automation to standardize development and staging deployment workflows, and root-caused Terraform version drift between v1 and v2 across environments.',
+				outcome:
+					'Reduced environment-specific configuration drift and improved deployment repeatability across teams.',
+			},
 		],
 	},
 	{
-		title: 'Software Engineer',
-		org: 'Novogradac & Company LLP',
-		period: 'Apr 2022 — Feb 2026',
-		bullets: [
-			'Restored trustworthy deploys for a 20-person engineering team by root-causing Terraform version drift between v1 and v2 across environments, then held dev and staging in parity through scheduled GitLab CI/CD pipelines and Dockerized services — removing a standing class of environment-specific failures.',
-			'Gave the finance team one view of customer activity instead of two systems to reconcile by hand, owning the Thought Industries LMS and Stripe billing integration end-to-end and automating the payment processing and reporting behind it.',
-			'Carried the platform through two migrations without disrupting users: search moved to Elasticsearch, and the site came off deprecated Google Maps APIs end-to-end — including custom replacements where the vendor upgrade path would have dropped existing behavior.',
-			'Reduced the attack surface of a public-facing platform at a national accounting firm by implementing its CORS, CSP, and XSS protection layer, and made production incidents diagnosable through Django application logging.',
-			'Let content editors ship without waiting on engineering by leading the Wagtail CMS redesign — standardized card components and modular filter blocks reused across 10+ page types — and kept the codebase maintainable as it grew by decoupling business logic with Django signals.',
+		org: 'MadeForSeconds',
+		role: 'Cloud Infrastructure & Platform Engineering',
+		period: '2026 – Present',
+		summary:
+			'Designed and implemented a serverless Google Cloud platform focused on infrastructure automation, deployment reliability, secure access management, and operational scalability.',
+		initiatives: [
+			{
+				title: 'Infrastructure as Code Transformation',
+				body: 'Replaced manual cloud resource provisioning with a Terraform-managed Google Cloud architecture spanning Cloud Run, Firestore, Cloud Functions, Secret Manager, Artifact Registry, IAM, GCS, and Identity Platform.',
+				outcome:
+					'Established reproducible, version-controlled infrastructure provisioning and reduced the operational overhead associated with manual environment management.',
+			},
+			{
+				title: 'Deployment Automation & Release Confidence',
+				body: 'Implemented GitHub Actions CI/CD pipelines incorporating automated testing, deployment validation, and SAST security scanning against a 277-test suite spanning backend, frontend, and browser flows.',
+				outcome:
+					'Increased release confidence and reduced the likelihood of regressions reaching deployed environments.',
+			},
+			{
+				title: 'Environment Provisioning Optimization',
+				body: 'Automated infrastructure provisioning and application environment configuration workflows to streamline onboarding and development setup.',
+				outcome:
+					'Reduced environment setup time from days to hours and improved developer productivity.',
+			},
+			{
+				title: 'Cloud Security & Access Governance',
+				body: 'Designed least-privilege IAM roles and service-account boundaries aligned with the operational responsibilities of each GCP resource.',
+				outcome:
+					'Improved access governance and reduced unnecessary permission exposure across the cloud environment.',
+			},
+			{
+				title: 'Authentication & API Hardening',
+				body: 'Implemented Google Sign-In using OAuth 2.0 / OpenID Connect and introduced SSRF mitigation controls within the FastAPI backend.',
+				outcome:
+					'Strengthened authentication handling and improved the security posture of externally accessible API workflows.',
+			},
 		],
 	},
 ];
+
+export const valueProposition = {
+	statement:
+		'The common thread across these initiatives is identifying operational friction, deployment risk, security exposure, and maintenance bottlenecks, then implementing pragmatic engineering solutions that make systems easier to operate, scale, secure, and evolve over time.',
+	areas: [
+		'Cloud infrastructure automation (Terraform / GCP)',
+		'CI/CD and deployment workflow standardization',
+		'Backend API architecture and integration design',
+		'Operational workflow automation',
+		'Least-privilege cloud security and access governance',
+		'Environment provisioning and developer experience improvements',
+	],
+};
 
 export type SkillGroup = { name: string; items: string[] };
 
