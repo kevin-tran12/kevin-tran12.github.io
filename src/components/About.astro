@@ -12,12 +12,22 @@ import { about } from '../data/site';
 		<div class="about">
 			<p class="about__intro lede">{about.intro}</p>
 
-			<h3 class="about__focus-title">{about.focusTitle}</h3>
-			<ul class="about__focus">
-				{about.focus.map((item) => <li>{item}</li>)}
-			</ul>
+			<div class="about__groups">
+				{
+					about.groups.map((group) => (
+						<section class="group">
+							<h3 class="group__title">{group.title}</h3>
+							<ul class="group__items">
+								{group.items.map((item) => (
+									<li>{item}</li>
+								))}
+							</ul>
+						</section>
+					))
+				}
+			</div>
 
-			<p class="about__shift">{about.shift}</p>
+			<p class="about__closing">{about.closing}</p>
 			<p class="about__personal">{about.personal}</p>
 		</div>
 	</div>
@@ -25,11 +35,17 @@ import { about } from '../data/site';
 
 <style>
 	.about {
-		max-width: 68ch;
+		max-width: 72ch;
 	}
 
-	.about__focus-title {
-		margin-top: 2rem;
+	.about__groups {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+		gap: 2rem;
+		margin-top: 2.25rem;
+	}
+
+	.group__title {
 		font-family: var(--font-mono);
 		font-size: 0.75rem;
 		letter-spacing: 0.14em;
@@ -38,7 +54,12 @@ import { about } from '../data/site';
 		font-weight: 600;
 	}
 
-	.about__focus {
+	/* The lead group is the pitch; the second is supporting history. */
+	.group:first-child .group__title {
+		color: var(--accent);
+	}
+
+	.group__items {
 		list-style: none;
 		margin: 1rem 0 0;
 		display: grid;
@@ -47,13 +68,13 @@ import { about } from '../data/site';
 		font-size: 0.9375rem;
 	}
 
-	.about__focus li {
+	.group__items li {
 		position: relative;
 		padding-left: 1.15rem;
 		line-height: 1.55;
 	}
 
-	.about__focus li::before {
+	.group__items li::before {
 		content: '';
 		position: absolute;
 		left: 0;
@@ -61,11 +82,15 @@ import { about } from '../data/site';
 		width: 5px;
 		height: 5px;
 		border-radius: 50%;
+		background: var(--border-strong);
+	}
+
+	.group:first-child .group__items li::before {
 		background: var(--accent);
 	}
 
-	.about__shift {
-		margin-top: 1.75rem;
+	.about__closing {
+		margin-top: 2.25rem;
 		color: var(--text-dim);
 	}
 

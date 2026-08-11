@@ -22,17 +22,31 @@ export const hero = {
 
 export const about = {
 	intro:
-		'Four years building and running production Python systems for a national accounting and advisory firm.',
-	focusTitle: 'Current engineering focus',
-	focus: [
-		'Python, Django, and Wagtail application development',
-		'Stripe webhook integrations for payment and reporting automation',
-		'Event-driven workflows using Django signals and asynchronous processing',
-		'GitLab CI/CD and Dockerized services',
-		'pytest and Selenium automated testing',
+		'I build cloud infrastructure and the delivery pipelines around it, backed by four years of production Python engineering.',
+	groups: [
+		{
+			title: 'Current focus',
+			items: [
+				'Terraform-managed GCP — Cloud Run, Firestore, Cloud Storage, Secret Manager, Cloud Functions',
+				'CI/CD on GitHub Actions and Cloud Build, with SAST and automated testing as release gates',
+				'Least-privilege IAM roles and service-account boundaries',
+				'OAuth 2.0 / OIDC authentication and API hardening',
+				'Cost-aware serverless architecture and reproducible environments',
+			],
+		},
+		{
+			title: 'Production background',
+			items: [
+				'Python, Django, and Wagtail application development',
+				'REST API design and Stripe webhook integrations',
+				'Event-driven workflows using Django signals',
+				'GitLab CI/CD and Dockerized services',
+				'pytest and Selenium automated testing',
+			],
+		},
 	],
-	shift:
-		'Increasingly my focus has shifted toward infrastructure reproducibility — Terraform-defined Cloud Run services, least-privilege IAM, and Cloudflare edge deployments.',
+	closing:
+		'The application background is what makes the infrastructure work concrete. I spent four years on the receiving end of environment drift and manual deployment steps, which is most of why I care about reproducibility now.',
 	personal:
 		'Outside of engineering I enjoy powerlifting, cooking, and automotive projects — I am usually happiest building or fixing something with my hands.',
 } as const;
