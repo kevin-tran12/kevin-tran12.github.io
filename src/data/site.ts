@@ -17,16 +17,25 @@ export const hero = {
 	// PCA first — it is the senior of the two.
 	badges: ['Google Cloud Professional Cloud Architect', 'Associate Cloud Engineer'],
 	summary:
-		'I build cloud-native systems and the pipelines that run them: Terraform-managed GCP infrastructure, containerized Python services on Cloud Run, and event-driven architectures that replace manual workflows.',
+		'I build Terraform-managed Google Cloud infrastructure, containerized Python services on Cloud Run, and the CI/CD pipelines that make application delivery reproducible.',
 } as const;
 
-export const about = [
-	'Most of my day-to-day has been Python — Django and Wagtail CMS platforms, Stripe webhook integrations that automate payment processing and reporting, and Django signals used to decouple business logic across application events. Alongside that I maintain GitLab CI/CD pipelines and Dockerized services, and write the pytest and Selenium coverage that keeps them honest.',
-	'The work I care most about sits one layer down: making infrastructure reproducible. On my own projects that means Terraform-defined Cloud Run services, least-privilege IAM service accounts, and edge hosting on Cloudflare — infrastructure you can tear down and stand back up from source.',
-	'I came to engineering from a career in hospitality, by way of App Academy and computer science coursework at Georgia State. When I am not coding I am fixing cars, snowboarding, powerlifting, rock climbing, hiking, cooking, and traveling — if it is hands-on or outdoors, I am usually in.',
-] as const;
-
-export type StackRow = { layer: string; tech: string };
+export const about = {
+	intro:
+		'Four years building and running production Python systems for a national accounting and advisory firm.',
+	focusTitle: 'Current engineering focus',
+	focus: [
+		'Python, Django, and Wagtail application development',
+		'Stripe webhook integrations for payment and reporting automation',
+		'Event-driven workflows using Django signals and asynchronous processing',
+		'GitLab CI/CD and Dockerized services',
+		'pytest and Selenium automated testing',
+	],
+	shift:
+		'Increasingly my focus has shifted toward infrastructure reproducibility — Terraform-defined Cloud Run services, least-privilege IAM, and Cloudflare edge deployments.',
+	personal:
+		'Outside of engineering I enjoy powerlifting, cooking, and automotive projects — I am usually happiest building or fixing something with my hands.',
+} as const;
 
 export const featuredProject = {
 	name: 'MadeForSeconds',
@@ -37,44 +46,71 @@ export const featuredProject = {
 		live: 'https://madeforseconds.pages.dev',
 		repo: 'https://github.com/kevin-tran12/MadeForSeconds',
 	},
+	// One line that conveys the whole system before any card is read.
+	architecture:
+		'Cloudflare Pages → Cloud Run (FastAPI) → Firestore, with Terraform managing every GCP resource and GitHub Actions plus Cloud Build handling CI/CD.',
 	highlights: [
 		{
+			title: 'Cost-aware serverless architecture',
+			points: [
+				'Cloud Run configured to scale to zero between requests',
+				'Resource allocation tuned for GCP’s always-free tier',
+				'Automated billing circuit breaker implemented as a Cloud Function',
+			],
+		},
+		{
 			title: 'Reproducible infrastructure',
-			body: 'Terraform defines every GCP resource — Cloud Run, Firestore, Cloud Storage, Secret Manager, Artifact Registry, Cloud Functions — with IAM service accounts scoped to least privilege. The environment rebuilds from source.',
+			points: [
+				'Terraform defines Cloud Run, Firestore, Cloud Storage, Secret Manager, Artifact Registry, and Cloud Functions',
+				'The environment rebuilds from source rather than from memory',
+				'Environment setup reduced from days to hours',
+			],
 		},
 		{
-			title: 'Scale to zero, cost to zero',
-			body: 'Cloud Run scales to zero between requests and resource allocation is tuned to GCP’s always-free tier. A Cloud Function acts as a billing circuit breaker if spend ever escapes the free tier.',
+			title: 'Secure machine-to-machine publishing',
+			points: [
+				'Remote MCP server over Streamable HTTP',
+				'OAuth 2.1 authentication via WorkOS AuthKit',
+				'Claude publishes recipes as an authenticated first-class client',
+			],
 		},
 		{
-			title: 'Delivery pipelines with SAST',
-			body: 'GitHub Actions and Cloud Build ship the FastAPI backend to Cloud Run with static analysis running in CI; Cloudflare Pages builds and deploys the React frontend from the same repository.',
+			title: 'Security controls',
+			points: [
+				'Least-privilege IAM service accounts',
+				'Secret Manager for all sensitive configuration',
+				'CSP and HSTS enforced at the Cloudflare edge',
+				'SSRF protections on upload paths',
+				'TOTP MFA on administrative financial workflows',
+			],
 		},
 		{
-			title: 'An agent-facing API',
-			body: 'A remote MCP server over Streamable HTTP, authenticated with OAuth 2.1 through WorkOS AuthKit, lets Claude draft and publish recipes as a first-class client.',
-		},
-		{
-			title: 'Defense in depth',
-			body: 'Google OAuth through Identity Platform with a TOTP second factor on the expense ledger, SSRF defenses on upload paths, CSP and HSTS enforced at the Cloudflare edge, and secrets that never leave Secret Manager.',
-		},
-		{
-			title: 'Tested end to end',
-			body: '277 tests across pytest, Vitest, and Playwright cover the API, the React frontend, and the full browser flows — all of it gating the pipeline.',
+			title: 'Delivery pipeline',
+			points: [
+				'GitHub Actions and Cloud Build ship the FastAPI backend to Cloud Run',
+				'SAST security scanning runs in CI',
+				'277 tests across pytest, Vitest, and Playwright gate every deploy',
+			],
 		},
 	],
+	// Chips rather than a layer/technology table — the table read like internal docs.
 	stack: [
-		{ layer: 'Frontend', tech: 'React 19 · Vite 6 · TypeScript · Tailwind CSS v4' },
-		{ layer: 'Backend', tech: 'FastAPI (Python 3.12)' },
-		{ layer: 'Database', tech: 'Cloud Firestore' },
-		{ layer: 'Auth', tech: 'Google OAuth via Identity Platform · TOTP second factor on the ledger' },
-		{ layer: 'Payments', tech: 'Stripe (one-time and recurring)' },
-		{ layer: 'Agent interface', tech: 'Remote MCP server · OAuth 2.1 via WorkOS AuthKit' },
-		{ layer: 'Hosting', tech: 'GCP Cloud Run (backend) · Cloudflare Pages (frontend)' },
-		{ layer: 'CI/CD', tech: 'GitHub Actions (SAST in pipeline) · Cloud Build · Cloudflare Pages' },
-		{ layer: 'Testing', tech: 'pytest · Vitest · Playwright (277 tests)' },
-		{ layer: 'Infrastructure', tech: 'Terraform · Artifact Registry · Cloud Functions' },
-	] satisfies StackRow[],
+		'React 19',
+		'TypeScript',
+		'FastAPI',
+		'Python 3.12',
+		'Cloud Run',
+		'Firestore',
+		'Cloud Storage',
+		'Secret Manager',
+		'Terraform',
+		'GitHub Actions',
+		'Cloud Build',
+		'Cloudflare Pages',
+		'Stripe',
+		'OAuth 2.1',
+		'Playwright',
+	],
 } as const;
 
 export type Initiative = {
@@ -136,37 +172,25 @@ export const engagements: Engagement[] = [
 		role: 'Cloud Infrastructure & Platform Engineering',
 		period: '2026 – Present',
 		summary:
-			'Designed and implemented a serverless Google Cloud platform focused on infrastructure automation, deployment reliability, secure access management, and operational scalability.',
+			'Designed and implemented a serverless Google Cloud platform focused on infrastructure automation, deployment reliability, secure access management, and operational scalability. Full architecture and security detail is in the case study above.',
 		initiatives: [
 			{
 				title: 'Infrastructure as Code Transformation',
 				body: 'Replaced manual cloud resource provisioning with a Terraform-managed Google Cloud architecture spanning Cloud Run, Firestore, Cloud Functions, Secret Manager, Artifact Registry, IAM, GCS, and Identity Platform.',
 				outcome:
-					'Established reproducible, version-controlled infrastructure provisioning and reduced the operational overhead associated with manual environment management.',
+					'Established reproducible, version-controlled provisioning and brought environment setup down from days to hours.',
 			},
 			{
 				title: 'Deployment Automation & Release Confidence',
-				body: 'Implemented GitHub Actions CI/CD pipelines incorporating automated testing, deployment validation, and SAST security scanning against a 277-test suite spanning backend, frontend, and browser flows.',
+				body: 'Implemented GitHub Actions and Cloud Build CI/CD pipelines incorporating automated testing, deployment validation, and SAST security scanning against a 277-test suite spanning backend, frontend, and browser flows.',
 				outcome:
 					'Increased release confidence and reduced the likelihood of regressions reaching deployed environments.',
 			},
 			{
-				title: 'Environment Provisioning Optimization',
-				body: 'Automated infrastructure provisioning and application environment configuration workflows to streamline onboarding and development setup.',
-				outcome:
-					'Reduced environment setup time from days to hours and improved developer productivity.',
-			},
-			{
 				title: 'Cloud Security & Access Governance',
-				body: 'Designed least-privilege IAM roles and service-account boundaries aligned with the operational responsibilities of each GCP resource.',
+				body: 'Designed least-privilege IAM roles and service-account boundaries aligned with each GCP resource’s operational responsibilities, implemented Google Sign-In over OAuth 2.0 / OpenID Connect, and introduced SSRF mitigation controls in the FastAPI backend.',
 				outcome:
-					'Improved access governance and reduced unnecessary permission exposure across the cloud environment.',
-			},
-			{
-				title: 'Authentication & API Hardening',
-				body: 'Implemented Google Sign-In using OAuth 2.0 / OpenID Connect and introduced SSRF mitigation controls within the FastAPI backend.',
-				outcome:
-					'Strengthened authentication handling and improved the security posture of externally accessible API workflows.',
+					'Reduced unnecessary permission exposure across the cloud environment and strengthened the security posture of externally accessible API workflows.',
 			},
 		],
 	},
@@ -187,38 +211,35 @@ export const valueProposition = {
 
 export type SkillGroup = { name: string; items: string[] };
 
+/**
+ * Sits high on the page so a 15-second scan hits the keywords before the
+ * prose. Grouped for ATS and human parsing alike.
+ */
 export const skills: SkillGroup[] = [
 	{
-		name: 'Cloud & IaC',
+		name: 'Cloud',
 		items: [
-			'GCP',
+			'Google Cloud Platform',
 			'Cloud Run',
 			'Firestore',
 			'Cloud Storage',
 			'Secret Manager',
-			'IAM',
-			'Artifact Registry',
 			'Cloud Functions',
-			'Cloudflare',
-			'Terraform',
-			'Docker',
+			'Identity Platform',
+			'IAM',
 		],
 	},
 	{
-		name: 'CI/CD & Tooling',
-		items: ['GitHub Actions', 'GitLab CI/CD', 'Cloud Build', 'Git', 'Linux / Bash', 'Claude Code'],
-	},
-	{
-		name: 'Languages',
-		items: ['Python', 'JavaScript (ES6)', 'TypeScript', 'SQL', 'HTML5', 'CSS3'],
+		name: 'Infrastructure',
+		items: ['Terraform', 'Docker', 'Cloudflare Pages', 'Artifact Registry', 'Linux / Bash'],
 	},
 	{
 		name: 'Backend & Data',
 		items: [
+			'Python',
+			'FastAPI',
 			'Django',
 			'Wagtail CMS',
-			'FastAPI',
-			'Flask',
 			'REST APIs',
 			'Stripe webhooks',
 			'PostgreSQL',
@@ -228,12 +249,33 @@ export const skills: SkillGroup[] = [
 		],
 	},
 	{
-		name: 'Frontend',
-		items: ['React', 'Tailwind CSS', 'Bootstrap', 'Django Templates', 'Vite', 'Responsive design'],
+		name: 'CI/CD & Testing',
+		items: [
+			'GitHub Actions',
+			'Cloud Build',
+			'GitLab CI/CD',
+			'pytest',
+			'Playwright',
+			'Vitest',
+			'Selenium',
+		],
 	},
 	{
-		name: 'Testing',
-		items: ['pytest', 'Selenium', 'Playwright', 'Vitest'],
+		name: 'Security',
+		items: [
+			'OAuth 2.0 / OIDC',
+			'OAuth 2.1',
+			'TOTP MFA',
+			'Least-privilege IAM',
+			'SSRF mitigation',
+			'CSP',
+			'HSTS',
+			'SAST in CI',
+		],
+	},
+	{
+		name: 'Languages & Frontend',
+		items: ['TypeScript', 'JavaScript (ES6)', 'SQL', 'React', 'Tailwind CSS', 'Vite'],
 	},
 ];
 
@@ -254,8 +296,8 @@ export const contact = {
 
 export const nav = [
 	{ label: 'About', href: '#about' },
+	{ label: 'Tech', href: '#skills' },
 	{ label: 'Work', href: '#work' },
 	{ label: 'Experience', href: '#experience' },
-	{ label: 'Skills', href: '#skills' },
 	{ label: 'Contact', href: '#contact' },
 ] as const;

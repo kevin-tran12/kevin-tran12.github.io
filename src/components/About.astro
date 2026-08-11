@@ -9,17 +9,69 @@ import { about } from '../data/site';
 			<h2>About</h2>
 		</div>
 
-		<div class="about__body">
-			{about.map((paragraph) => <p>{paragraph}</p>)}
+		<div class="about">
+			<p class="about__intro lede">{about.intro}</p>
+
+			<h3 class="about__focus-title">{about.focusTitle}</h3>
+			<ul class="about__focus">
+				{about.focus.map((item) => <li>{item}</li>)}
+			</ul>
+
+			<p class="about__shift">{about.shift}</p>
+			<p class="about__personal">{about.personal}</p>
 		</div>
 	</div>
 </section>
 
 <style>
-	.about__body {
-		display: grid;
-		gap: 1.15rem;
+	.about {
 		max-width: 68ch;
+	}
+
+	.about__focus-title {
+		margin-top: 2rem;
+		font-family: var(--font-mono);
+		font-size: 0.75rem;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: var(--text-faint);
+		font-weight: 600;
+	}
+
+	.about__focus {
+		list-style: none;
+		margin: 1rem 0 0;
+		display: grid;
+		gap: 0.55rem;
 		color: var(--text-dim);
+		font-size: 0.9375rem;
+	}
+
+	.about__focus li {
+		position: relative;
+		padding-left: 1.15rem;
+		line-height: 1.55;
+	}
+
+	.about__focus li::before {
+		content: '';
+		position: absolute;
+		left: 0;
+		top: 0.6em;
+		width: 5px;
+		height: 5px;
+		border-radius: 50%;
+		background: var(--accent);
+	}
+
+	.about__shift {
+		margin-top: 1.75rem;
+		color: var(--text-dim);
+	}
+
+	.about__personal {
+		margin-top: 1.15rem;
+		color: var(--text-faint);
+		font-size: 0.9375rem;
 	}
 </style>

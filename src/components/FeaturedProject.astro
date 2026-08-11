@@ -6,7 +6,7 @@ import ArchitectureDiagram from './ArchitectureDiagram.astro';
 <section id="work" class="section">
 	<div class="wrap">
 		<div class="section-head">
-			<span class="eyebrow">02</span>
+			<span class="eyebrow">03</span>
 			<h2>Selected work</h2>
 		</div>
 
@@ -15,6 +15,12 @@ import ArchitectureDiagram from './ArchitectureDiagram.astro';
 				<h3 class="project__name">{p.name}</h3>
 				<p class="project__tagline">{p.tagline}</p>
 				<p class="project__desc">{p.description}</p>
+
+				<p class="project__arch">
+					<span class="project__arch-label">Architecture</span>
+					{p.architecture}
+				</p>
+
 				<div class="project__links">
 					<a class="btn btn--primary" href={p.links.live} rel="noopener">Live site</a>
 					<a class="btn" href={p.links.repo} rel="noopener">Source</a>
@@ -28,7 +34,11 @@ import ArchitectureDiagram from './ArchitectureDiagram.astro';
 					p.highlights.map((h) => (
 						<li class="card highlight">
 							<h4>{h.title}</h4>
-							<p>{h.body}</p>
+							<ul class="highlight__points">
+								{h.points.map((point) => (
+									<li>{point}</li>
+								))}
+							</ul>
 						</li>
 					))
 				}
@@ -36,26 +46,9 @@ import ArchitectureDiagram from './ArchitectureDiagram.astro';
 
 			<div class="stack">
 				<h4 class="stack__title">Stack</h4>
-				<div class="scroll-x">
-					<table>
-						<thead>
-							<tr>
-								<th scope="col">Layer</th>
-								<th scope="col">Technology</th>
-							</tr>
-						</thead>
-						<tbody>
-							{
-								p.stack.map((row) => (
-									<tr>
-										<th scope="row">{row.layer}</th>
-										<td>{row.tech}</td>
-									</tr>
-								))
-							}
-						</tbody>
-					</table>
-				</div>
+				<ul class="stack__chips">
+					{p.stack.map((tech) => <li class="chip">{tech}</li>)}
+				</ul>
 			</div>
 		</article>
 	</div>
@@ -81,6 +74,29 @@ import ArchitectureDiagram from './ArchitectureDiagram.astro';
 		max-width: 66ch;
 	}
 
+	.project__arch {
+		margin-top: 1.5rem;
+		padding: 0.9rem 1.1rem;
+		border: 1px solid var(--border);
+		border-left: 2px solid var(--accent-border);
+		border-radius: var(--radius-sm);
+		background: var(--bg-elev);
+		color: var(--text-dim);
+		font-size: 0.9rem;
+		line-height: 1.6;
+		max-width: 74ch;
+	}
+
+	.project__arch-label {
+		display: block;
+		margin-bottom: 0.2rem;
+		font-family: var(--font-mono);
+		font-size: 0.6875rem;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: var(--accent);
+	}
+
 	.project__links {
 		display: flex;
 		flex-wrap: wrap;
@@ -90,10 +106,17 @@ import ArchitectureDiagram from './ArchitectureDiagram.astro';
 
 	.highlights {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+		/* 21rem holds these to two columns: at three, the bulleted points wrap
+		   every few words. */
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 21rem), 1fr));
 		gap: 1rem;
 		list-style: none;
 		margin: 2.5rem 0 0;
+	}
+
+	/* An odd final card would otherwise sit beside an empty cell. */
+	.highlight:last-child:nth-child(odd) {
+		grid-column: 1 / -1;
 	}
 
 	.highlight h4 {
@@ -102,11 +125,30 @@ import ArchitectureDiagram from './ArchitectureDiagram.astro';
 		letter-spacing: -0.01em;
 	}
 
-	.highlight p {
-		margin-top: 0.45rem;
+	.highlight__points {
+		list-style: none;
+		margin: 0.7rem 0 0;
+		display: grid;
+		gap: 0.45rem;
 		color: var(--text-dim);
-		font-size: 0.9rem;
-		line-height: 1.6;
+		font-size: 0.875rem;
+	}
+
+	.highlight__points li {
+		position: relative;
+		padding-left: 1.05rem;
+		line-height: 1.55;
+	}
+
+	.highlight__points li::before {
+		content: '';
+		position: absolute;
+		left: 0;
+		top: 0.58em;
+		width: 4px;
+		height: 4px;
+		border-radius: 50%;
+		background: var(--border-strong);
 	}
 
 	.stack {
@@ -122,44 +164,11 @@ import ArchitectureDiagram from './ArchitectureDiagram.astro';
 		margin-bottom: 0.9rem;
 	}
 
-	table {
-		width: 100%;
-		border-collapse: collapse;
-		font-size: 0.9rem;
-	}
-
-	thead th {
-		text-align: left;
-		padding: 0 0 0.6rem;
-		font-size: 0.75rem;
-		font-weight: 600;
-		letter-spacing: 0.08em;
-		text-transform: uppercase;
-		color: var(--text-faint);
-		border-bottom: 1px solid var(--border-strong);
-	}
-
-	tbody th {
-		text-align: left;
-		font-weight: 600;
-		color: var(--text);
-		white-space: nowrap;
-		padding-right: 2rem;
-	}
-
-	tbody td {
-		color: var(--text-dim);
-	}
-
-	tbody th,
-	tbody td {
-		padding-block: 0.7rem;
-		border-bottom: 1px solid var(--border);
-		vertical-align: top;
-	}
-
-	tbody tr:last-child th,
-	tbody tr:last-child td {
-		border-bottom: 0;
+	.stack__chips {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		list-style: none;
+		margin: 0;
 	}
 </style>
