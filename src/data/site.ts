@@ -6,14 +6,14 @@
 export const meta = {
 	title: 'Kevin Tran — Cloud & Platform Engineer',
 	description:
-		'Cloud and platform engineer in Atlanta. Terraform-managed GCP infrastructure, containerized Python services, and the CI/CD that ships them.',
+		'Cloud and platform engineer in the NYC metro. Terraform-managed GCP infrastructure, containerized Python services, and the CI/CD that ships them.',
 	url: 'https://kevin-tran12.github.io',
 } as const;
 
 export const hero = {
 	name: 'Kevin Tran',
 	role: 'Cloud & Platform Engineer',
-	location: 'Atlanta, GA — open to relocation',
+	location: 'NYC Metro — open to relocation',
 	// PCA first — it is the senior of the two.
 	badges: ['Google Cloud Professional Cloud Architect', 'Associate Cloud Engineer'],
 	summary:
@@ -32,7 +32,7 @@ export const featuredProject = {
 	name: 'MadeForSeconds',
 	tagline: 'A production recipe platform running entirely inside GCP’s always-free tier.',
 	description:
-		'A personal recipe site with supporter subscriptions, a TOTP-gated expense ledger, and a remote MCP server that lets Claude author and publish recipes over OAuth 2.1. I designed and built the whole thing — application, infrastructure, and delivery pipeline.',
+		'A personal recipe site with supporter subscriptions, an admin expense ledger behind Google OAuth and a TOTP second factor, and a remote MCP server that lets Claude author and publish recipes over OAuth 2.1. I designed and built the whole thing — application, infrastructure, and delivery pipeline.',
 	links: {
 		live: 'https://madeforseconds.pages.dev',
 		repo: 'https://github.com/kevin-tran12/MadeForSeconds',
@@ -40,39 +40,40 @@ export const featuredProject = {
 	highlights: [
 		{
 			title: 'Reproducible infrastructure',
-			body: 'Terraform defines every GCP resource — Cloud Run, Firestore, Cloud Storage, Secret Manager — with IAM service accounts scoped to least privilege. The environment rebuilds from source.',
+			body: 'Terraform defines every GCP resource — Cloud Run, Firestore, Cloud Storage, Secret Manager, Artifact Registry, Cloud Functions — with IAM service accounts scoped to least privilege. The environment rebuilds from source.',
 		},
 		{
 			title: 'Scale to zero, cost to zero',
-			body: 'Cloud Run scales to zero between requests and every service stays inside GCP’s always-free tier, so the platform costs nothing to keep online.',
+			body: 'Cloud Run scales to zero between requests and resource allocation is tuned to GCP’s always-free tier. A Cloud Function acts as a billing circuit breaker if spend ever escapes the free tier.',
 		},
 		{
-			title: 'Two delivery pipelines',
-			body: 'GitHub Actions and Cloud Build ship the FastAPI backend to Cloud Run; Cloudflare Pages builds and deploys the React frontend from the same repository.',
+			title: 'Delivery pipelines with SAST',
+			body: 'GitHub Actions and Cloud Build ship the FastAPI backend to Cloud Run with static analysis running in CI; Cloudflare Pages builds and deploys the React frontend from the same repository.',
 		},
 		{
 			title: 'An agent-facing API',
 			body: 'A remote MCP server over Streamable HTTP, authenticated with OAuth 2.1 through WorkOS AuthKit, lets Claude draft and publish recipes as a first-class client.',
 		},
 		{
-			title: 'Hardened at the edge',
-			body: 'CSP and HSTS are enforced at the Cloudflare edge, admin access to the expense ledger is gated behind TOTP, and secrets never leave Secret Manager.',
+			title: 'Defense in depth',
+			body: 'Google OAuth through Identity Platform with a TOTP second factor on the expense ledger, SSRF defenses on upload paths, CSP and HSTS enforced at the Cloudflare edge, and secrets that never leave Secret Manager.',
 		},
 		{
-			title: 'Payments and state',
-			body: 'Stripe handles one-time and recurring supporter donations; Firestore holds real-time state and Cloud Storage holds images and receipts.',
+			title: 'Tested end to end',
+			body: '277 tests across pytest, Vitest, and Playwright cover the API, the React frontend, and the full browser flows — all of it gating the pipeline.',
 		},
 	],
 	stack: [
 		{ layer: 'Frontend', tech: 'React 19 · Vite 6 · TypeScript · Tailwind CSS v4' },
 		{ layer: 'Backend', tech: 'FastAPI (Python 3.12)' },
 		{ layer: 'Database', tech: 'Cloud Firestore' },
-		{ layer: 'Auth', tech: 'Google Identity Platform · TOTP admin 2FA' },
+		{ layer: 'Auth', tech: 'Google OAuth via Identity Platform · TOTP second factor on the ledger' },
 		{ layer: 'Payments', tech: 'Stripe (one-time and recurring)' },
 		{ layer: 'Agent interface', tech: 'Remote MCP server · OAuth 2.1 via WorkOS AuthKit' },
 		{ layer: 'Hosting', tech: 'GCP Cloud Run (backend) · Cloudflare Pages (frontend)' },
-		{ layer: 'CI/CD', tech: 'GitHub Actions · Cloud Build · Cloudflare Pages' },
-		{ layer: 'Infrastructure', tech: 'Terraform' },
+		{ layer: 'CI/CD', tech: 'GitHub Actions (SAST in pipeline) · Cloud Build · Cloudflare Pages' },
+		{ layer: 'Testing', tech: 'pytest · Vitest · Playwright (277 tests)' },
+		{ layer: 'Infrastructure', tech: 'Terraform · Artifact Registry · Cloud Functions' },
 	] satisfies StackRow[],
 } as const;
 
@@ -89,20 +90,22 @@ export const experience: Role[] = [
 		org: 'MadeForSeconds',
 		period: 'Jan 2026 — Present',
 		bullets: [
-			'Architected a full multi-cloud environment with Terraform and agentic engineering workflows, cutting environment setup time by roughly 90%.',
-			'Engineered reproducible infrastructure-as-code for Google Cloud Run services and Cloudflare edge hosting, enforcing least-privilege GCP IAM through granular service account policies.',
-			'Designed a secure, event-driven architecture on Cloud Storage and Firestore for real-time state management.',
+			'Architected and deployed multi-cloud infrastructure with Terraform — serverless compute on Cloud Run, edge hosting on Cloudflare Pages, Cloud Storage for media, and Firestore for real-time state — reducing environment setup from days to hours using agentic engineering workflows.',
+			'Enforced least-privilege access across every cloud resource through granular GCP IAM roles and dedicated service accounts, with all secrets held in Secret Manager.',
+			'Built the delivery pipeline on GitHub Actions and Cloud Build with static analysis in CI and 277 tests across pytest, Vitest, and Playwright gating every deploy.',
+			'Kept running costs at effectively zero through scale-to-zero compute, free-tier-tuned resource allocation, and an automated billing circuit breaker implemented as a Cloud Function.',
 		],
 	},
 	{
-		title: 'Python Developer',
-		org: 'Novogradac',
+		title: 'Software Engineer',
+		org: 'Novogradac & Company LLP',
 		period: 'Apr 2022 — Feb 2026',
 		bullets: [
-			'Contributed to a full-platform Wagtail CMS redesign, rebuilding page templates with updated layouts and dedicated CSS structures across variable content states and responsive breakpoints.',
-			'Built a Stripe webhook integration to automate payment processing and trigger report generation, and developed consolidated reports merging Thought Industries LMS and website purchase data into a single view of customer activity.',
-			'Implemented Django pre/post signals to decouple core business logic across application events, reducing cross-feature bugs and improving long-term maintainability.',
-			'Maintained GitLab CI/CD pipelines and Dockerized services to eliminate dev/staging drift, and authored unit and end-to-end coverage with pytest and Selenium.',
+			'Root-caused Terraform version drift between v1 and v2 across environments to restore a consistent infrastructure state, and maintained GitLab CI/CD pipelines — including scheduled jobs and Dockerized service deployments — that eliminated dev/staging inconsistency.',
+			'Owned a Thought Industries LMS and Stripe billing integration end-to-end, automating payment processing and report generation and consolidating both sources into a single view of customer activity.',
+			'Ran an Elasticsearch migration and an end-to-end Google Maps API deprecation migration, building custom replacements where the vendor path did not cover existing behavior.',
+			'Implemented the application security layer — CORS, CSP, and XSS protections — alongside Django application logging and pandas-based data pipelines.',
+			'Built and maintained the Django/Wagtail platform and its REST APIs, using pre/post signals to decouple business logic across application events, with pytest and Selenium coverage.',
 		],
 	},
 	{
@@ -128,6 +131,8 @@ export const skills: SkillGroup[] = [
 			'Cloud Storage',
 			'Secret Manager',
 			'IAM',
+			'Artifact Registry',
+			'Cloud Functions',
 			'Cloudflare',
 			'Terraform',
 			'Docker',
@@ -151,7 +156,9 @@ export const skills: SkillGroup[] = [
 			'REST APIs',
 			'Stripe webhooks',
 			'PostgreSQL',
+			'Elasticsearch',
 			'Redis',
+			'pandas',
 		],
 	},
 	{
@@ -160,7 +167,7 @@ export const skills: SkillGroup[] = [
 	},
 	{
 		name: 'Testing',
-		items: ['pytest', 'Selenium', 'Playwright'],
+		items: ['pytest', 'Selenium', 'Playwright', 'Vitest'],
 	},
 ];
 
