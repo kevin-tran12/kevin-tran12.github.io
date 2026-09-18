@@ -14,15 +14,11 @@ const icons: Record<string, string> = {
 <section id="contact" class="section">
 	<div class="wrap">
 		<div class="section-head">
-			<span class="eyebrow">05</span>
-			<h2>Get in touch</h2>
+			<span class="eyebrow">06 — Get in touch</span>
 		</div>
 
 		<div class="contact">
-			<p class="contact__lede lede">
-				I am open to cloud, platform, and infrastructure roles — based in the NYC metro and
-				open to relocation. The fastest way to reach me is email.
-			</p>
+			<p class="contact__lede lede">{contact.lede}</p>
 
 			<a class="contact__email" href={`mailto:${contact.email}`}>{contact.email}</a>
 
@@ -56,10 +52,16 @@ const icons: Record<string, string> = {
 	}
 
 	.contact__email {
-		display: inline-block;
+		/* The primary action on the page, and on a phone it is a thumb
+		   target as much as a link — hold it at 48px regardless of how the
+		   fluid type scale lands. */
+		display: inline-flex;
+		align-items: center;
+		min-height: 48px;
+		font-family: var(--font-display);
 		font-size: clamp(1.15rem, 0.95rem + 1vw, 1.6rem);
-		font-weight: 600;
-		letter-spacing: -0.02em;
+		font-weight: 700;
+		letter-spacing: -0.03em;
 		text-decoration: none;
 		border-bottom: 1px solid var(--accent-border);
 		padding-bottom: 0.15rem;

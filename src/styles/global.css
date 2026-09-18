@@ -1,36 +1,47 @@
 /* ---------------------------------------------------------------
    Design tokens — dark by default, light via prefers-color-scheme
+
+   Two webfonts, not three: Space Grotesk carries the display voice,
+   IBM Plex Sans the prose. The small mono labels use the system mono
+   stack — at 11–12px, uppercase and letterspaced, a webfont for those
+   would cost a third network request nobody can see the benefit of.
    --------------------------------------------------------------- */
 
 :root {
 	color-scheme: dark;
 
-	--bg: #0a0e13;
-	--bg-elev: #111820;
-	--bg-elev-2: #16202b;
-	--border: #1e2b38;
-	--border-strong: #2b3d4f;
+	--bg: #0e0f13;
+	--bg-elev: #16181d;
+	--bg-elev-2: #1b1e24;
+	--border: #23262d;
+	--border-strong: #2d313a;
 
-	--text: #e8eef4;
-	--text-dim: #a8b6c4;
-	--text-faint: #74838f;
+	--text: #edece9;
+	--text-dim: #b6b5b0;
+	--text-faint: #9a9aa4;
 
-	--accent: #2dd4bf;
-	--accent-hover: #5eead4;
-	--accent-soft: rgba(45, 212, 191, 0.1);
-	--accent-border: rgba(45, 212, 191, 0.28);
+	--accent: #e8a33d;
+	--accent-hover: #f5c078;
+	--accent-soft: rgba(232, 163, 61, 0.1);
+	--accent-border: rgba(232, 163, 61, 0.3);
+	/* Text placed ON the accent (the primary button). */
+	--on-accent: #0e0f13;
+
+	--ok-bg: #10261e;
+	--ok-text: #5ee9b5;
 
 	--shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.28);
 
-	--radius: 12px;
-	--radius-sm: 7px;
+	--radius: 14px;
+	--radius-sm: 8px;
 
-	--content: 62rem;
+	--content: 68rem;
 	--gutter: clamp(1.25rem, 5vw, 3rem);
-	--section-gap: clamp(4.5rem, 10vw, 8rem);
+	--section-gap: clamp(4rem, 9vw, 6.5rem);
 
-	--font: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial,
-		sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+	--font-display: 'Space Grotesk', ui-sans-serif, system-ui, 'Segoe UI', sans-serif;
+	--font: 'IBM Plex Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Helvetica,
+		Arial, sans-serif;
 	--font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono',
 		monospace;
 }
@@ -39,24 +50,31 @@
 	:root {
 		color-scheme: light;
 
-		--bg: #fbfcfd;
+		--bg: #fbfbfd;
 		--bg-elev: #ffffff;
-		--bg-elev-2: #f4f7f9;
-		--border: #e0e7ec;
-		--border-strong: #c8d4dd;
+		--bg-elev-2: #f4f4f7;
+		--border: #e7e7ec;
+		--border-strong: #dcdce3;
 
-		--text: #12191f;
-		--text-dim: #4d5c69;
-		/* Both of these are held at >= 4.5:1 on --bg: they carry real text
-		   (captions, meta, the section eyebrows), not just decoration. */
-		--text-faint: #5c6a76;
+		--text: #101014;
+		--text-dim: #3f3f48;
+		/* Held at >= 4.5:1 on --bg: this carries real text (captions,
+		   meta, the section eyebrows), not just decoration. */
+		--text-faint: #56565e;
 
-		--accent: #0e7367;
-		--accent-hover: #0b5a51;
-		--accent-soft: rgba(14, 115, 103, 0.08);
-		--accent-border: rgba(14, 115, 103, 0.3);
+		/* Amber at its dark-mode value sits near 2:1 on a light ground.
+		   The light accent is the same hue driven down in lightness so
+		   accent-coloured text and the primary button both clear AA. */
+		--accent: #9a5b06;
+		--accent-hover: #7a4705;
+		--accent-soft: rgba(154, 91, 6, 0.08);
+		--accent-border: rgba(154, 91, 6, 0.3);
+		--on-accent: #ffffff;
 
-		--shadow: 0 1px 2px rgba(16, 32, 48, 0.06), 0 8px 24px rgba(16, 32, 48, 0.06);
+		--ok-bg: #ecfdf5;
+		--ok-text: #046c4e;
+
+		--shadow: 0 1px 2px rgba(16, 16, 24, 0.05), 0 8px 24px rgba(16, 16, 24, 0.06);
 	}
 }
 
@@ -137,26 +155,35 @@ ul {
 
 h1,
 h2,
-h3 {
+h3,
+h4 {
+	font-family: var(--font-display);
 	line-height: 1.15;
-	letter-spacing: -0.02em;
-	font-weight: 650;
+	letter-spacing: -0.025em;
+	font-weight: 700;
 	text-wrap: balance;
 }
 
 h1 {
-	font-size: clamp(2.5rem, 1.6rem + 4.2vw, 4.25rem);
-	letter-spacing: -0.035em;
+	font-size: clamp(2.25rem, 1.35rem + 3.9vw, 4.25rem);
+	line-height: 1.04;
+	letter-spacing: -0.042em;
 }
 
 h2 {
-	font-size: clamp(1.6rem, 1.3rem + 1.4vw, 2.1rem);
+	font-size: clamp(1.5rem, 1.25rem + 1.2vw, 1.95rem);
 }
 
 h3 {
-	font-size: 1.05rem;
+	font-size: 1.15rem;
+	font-weight: 700;
+	letter-spacing: -0.03em;
+}
+
+h4 {
+	font-size: 1.0625rem;
 	font-weight: 600;
-	letter-spacing: -0.01em;
+	letter-spacing: -0.015em;
 }
 
 p {
@@ -176,28 +203,39 @@ p {
 
 .section {
 	padding-block: var(--section-gap);
+}
+
+/* A hairline between sections, but not above the first one — the hero
+   already ends on the stat strip's own rule. */
+.section + .section {
 	border-top: 1px solid var(--border);
 }
 
 .section-head {
 	display: flex;
-	align-items: baseline;
-	gap: 0.9rem;
-	margin-bottom: 2.75rem;
+	align-items: center;
+	gap: 1rem;
+	margin-bottom: 2.25rem;
 }
 
 .section-head::after {
 	content: '';
 	flex: 1;
 	height: 1px;
-	background: linear-gradient(to right, var(--border-strong), transparent);
+	background: var(--border);
 }
 
+/* The numbered/labelled tag that opens each section. Mono, small and
+   quiet — it marks the section without competing with its heading. */
 .eyebrow {
 	font-family: var(--font-mono);
 	font-size: 0.75rem;
-	letter-spacing: 0.14em;
+	letter-spacing: 0.12em;
 	text-transform: uppercase;
+	color: var(--text-faint);
+}
+
+.eyebrow--accent {
 	color: var(--accent);
 }
 
@@ -211,7 +249,7 @@ p {
 	display: inline-flex;
 	align-items: center;
 	gap: 0.4rem;
-	padding: 0.3rem 0.7rem;
+	padding: 0.32rem 0.72rem;
 	border: 1px solid var(--border);
 	border-radius: 999px;
 	background: var(--bg-elev);
@@ -221,44 +259,48 @@ p {
 	white-space: nowrap;
 }
 
-/* Reusable button */
+/* Reusable button — 48px min height so it stays a comfortable target. */
 .btn {
 	display: inline-flex;
 	align-items: center;
+	justify-content: center;
 	gap: 0.5rem;
-	padding: 0.6rem 1.15rem;
+	min-height: 48px;
+	padding: 0 1.4rem;
 	border: 1px solid var(--border-strong);
 	border-radius: var(--radius-sm);
 	background: var(--bg-elev);
 	color: var(--text);
 	font-size: 0.9375rem;
-	font-weight: 550;
+	font-weight: 500;
 	text-decoration: none;
 	transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
 }
 
 .btn:hover {
-	border-color: var(--accent-border);
-	background: var(--accent-soft);
+	border-color: var(--border-strong);
+	background: var(--bg-elev-2);
 	color: var(--text);
 }
 
 .btn--primary {
-	border-color: var(--accent-border);
-	background: var(--accent-soft);
-	color: var(--accent);
+	border-color: transparent;
+	background: var(--accent);
+	color: var(--on-accent);
+	font-weight: 600;
 }
 
 .btn--primary:hover {
-	color: var(--accent-hover);
-	border-color: var(--accent);
+	background: var(--accent-hover);
+	border-color: transparent;
+	color: var(--on-accent);
 }
 
 .card {
 	border: 1px solid var(--border);
 	border-radius: var(--radius);
 	background: var(--bg-elev);
-	padding: 1.4rem 1.5rem;
+	padding: 1.6rem 1.75rem;
 }
 
 /* Wide content (tables, diagrams) scrolls inside its own box,

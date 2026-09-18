@@ -6,26 +6,44 @@ import ArchitectureDiagram from './ArchitectureDiagram.astro';
 <section id="work" class="section">
 	<div class="wrap">
 		<div class="section-head">
-			<span class="eyebrow">03</span>
-			<h2>Selected work</h2>
+			<span class="eyebrow">01 — Selected work</span>
 		</div>
 
 		<article class="project">
-			<header class="project__head">
-				<h3 class="project__name">{p.name}</h3>
-				<p class="project__tagline">{p.tagline}</p>
-				<p class="project__desc">{p.description}</p>
+			<div class="project__panel">
+				<header class="project__head">
+					<div class="project__title">
+						<h3 class="project__name">{p.name}</h3>
+						<span class="project__status">{p.status}</span>
+					</div>
+					<p class="project__tagline">{p.tagline}</p>
 
-				<p class="project__arch">
-					<span class="project__arch-label">Architecture</span>
-					{p.architecture}
-				</p>
+					<div class="project__links">
+						<a class="btn btn--primary" href={p.links.live} rel="noopener">Live site</a>
+						<a class="btn" href={p.links.repo} rel="noopener">Source</a>
+					</div>
+				</header>
 
-				<div class="project__links">
-					<a class="btn btn--primary" href={p.links.live} rel="noopener">Live site</a>
-					<a class="btn" href={p.links.repo} rel="noopener">Source</a>
-				</div>
-			</header>
+				{/* Problem / decision / outcome — the frame that shows the
+				    reasoning rather than listing what got built. */}
+				<ol class="story">
+					{
+						p.story.map((step) => (
+							<li class="story__step">
+								<h4 class="story__label">{step.label}</h4>
+								<p class="story__body">{step.body}</p>
+							</li>
+						))
+					}
+				</ol>
+			</div>
+
+			<p class="project__desc">{p.description}</p>
+
+			<p class="project__arch">
+				<span class="project__arch-label">Architecture</span>
+				{p.architecture}
+			</p>
 
 			<ArchitectureDiagram />
 
@@ -55,113 +73,177 @@ import ArchitectureDiagram from './ArchitectureDiagram.astro';
 </section>
 
 <style>
+	/* The story panel is the one boxed element in the section; everything
+	   below it sits on the page ground so the panel keeps its emphasis. */
+	.project__panel {
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
+		background: var(--bg-elev);
+		overflow: hidden;
+	}
+
+	.project__head {
+		padding: clamp(1.6rem, 4vw, 2.1rem) clamp(1.4rem, 4vw, 2.35rem);
+		border-bottom: 1px solid var(--border);
+	}
+
+	.project__title {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+	}
+
 	.project__name {
-		font-size: clamp(1.5rem, 1.2rem + 1.2vw, 1.9rem);
-		font-weight: 650;
-		letter-spacing: -0.02em;
+		font-size: clamp(1.45rem, 1.2rem + 1.1vw, 1.75rem);
+	}
+
+	.project__status {
+		padding: 0.25rem 0.625rem;
+		border-radius: 999px;
+		background: var(--ok-bg);
+		color: var(--ok-text);
+		font-size: 0.75rem;
+		font-weight: 600;
+		white-space: nowrap;
 	}
 
 	.project__tagline {
-		margin-top: 0.5rem;
-		color: var(--accent);
-		font-size: 1.0625rem;
-		max-width: 52ch;
-	}
-
-	.project__desc {
-		margin-top: 1.1rem;
+		margin-top: 0.85rem;
+		max-width: 60ch;
+		font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.1875rem);
+		line-height: 1.55;
 		color: var(--text-dim);
-		max-width: 66ch;
-	}
-
-	.project__arch {
-		margin-top: 1.5rem;
-		padding: 0.9rem 1.1rem;
-		border: 1px solid var(--border);
-		border-left: 2px solid var(--accent-border);
-		border-radius: var(--radius-sm);
-		background: var(--bg-elev);
-		color: var(--text-dim);
-		font-size: 0.9rem;
-		line-height: 1.6;
-		max-width: 74ch;
-	}
-
-	.project__arch-label {
-		display: block;
-		margin-bottom: 0.2rem;
-		font-family: var(--font-mono);
-		font-size: 0.6875rem;
-		letter-spacing: 0.14em;
-		text-transform: uppercase;
-		color: var(--accent);
 	}
 
 	.project__links {
 		display: flex;
 		flex-wrap: wrap;
-		gap: 0.65rem;
-		margin-top: 1.6rem;
+		gap: 0.75rem;
+		margin-top: 1.5rem;
+	}
+
+	.story {
+		list-style: none;
+		margin: 0;
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+
+	.story__step {
+		padding: 1.6rem clamp(1.4rem, 3vw, 1.85rem);
+	}
+
+	.story__step + .story__step {
+		border-inline-start: 1px solid var(--border);
+	}
+
+	.story__label {
+		font-family: var(--font-mono);
+		font-size: 0.6875rem;
+		font-weight: 500;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		color: var(--accent);
+	}
+
+	.story__body {
+		margin-top: 0.6rem;
+		font-size: 0.9375rem;
+		line-height: 1.6;
+		color: var(--text-dim);
+	}
+
+	@media (max-width: 52rem) {
+		.story {
+			grid-template-columns: 1fr;
+		}
+
+		.story__step + .story__step {
+			border-inline-start: 0;
+			border-top: 1px solid var(--border);
+		}
+	}
+
+	.project__desc {
+		margin-top: 2.25rem;
+		max-width: 68ch;
+		color: var(--text-dim);
+	}
+
+	.project__arch {
+		margin-top: 1.5rem;
+		padding: 1.15rem 1.35rem;
+		border: 1px solid var(--border);
+		border-radius: var(--radius-sm);
+		background: var(--bg-elev-2);
+		color: var(--text-dim);
+		font-size: 0.9375rem;
+		line-height: 1.6;
+	}
+
+	.project__arch-label {
+		display: block;
+		margin-bottom: 0.3rem;
+		font-family: var(--font-mono);
+		font-size: 0.6875rem;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		color: var(--text-faint);
 	}
 
 	.highlights {
+		list-style: none;
+		margin: 2rem 0 0;
 		display: grid;
-		/* 21rem holds these to two columns: at three, the bulleted points wrap
-		   every few words. */
 		grid-template-columns: repeat(auto-fit, minmax(min(100%, 21rem), 1fr));
 		gap: 1rem;
-		list-style: none;
-		margin: 2.5rem 0 0;
 	}
 
-	/* An odd final card would otherwise sit beside an empty cell. */
+	/* An odd final card would otherwise sit next to an empty cell. */
 	.highlight:last-child:nth-child(odd) {
 		grid-column: 1 / -1;
 	}
 
-	.highlight h4 {
-		font-size: 0.9375rem;
-		font-weight: 600;
-		letter-spacing: -0.01em;
-	}
-
 	.highlight__points {
 		list-style: none;
-		margin: 0.7rem 0 0;
-		display: grid;
-		gap: 0.45rem;
-		color: var(--text-dim);
-		font-size: 0.875rem;
+		margin: 0.85rem 0 0;
+		display: flex;
+		flex-direction: column;
+		gap: 0.6rem;
 	}
 
 	.highlight__points li {
 		position: relative;
-		padding-left: 1.05rem;
-		line-height: 1.55;
+		padding-inline-start: 1rem;
+		font-size: 0.9rem;
+		line-height: 1.6;
+		color: var(--text-dim);
 	}
 
 	.highlight__points li::before {
 		content: '';
 		position: absolute;
-		left: 0;
-		top: 0.58em;
-		width: 4px;
-		height: 4px;
-		border-radius: 50%;
-		background: var(--border-strong);
+		inset-inline-start: 0;
+		top: 0.62em;
+		width: 5px;
+		height: 1px;
+		background: var(--accent);
 	}
 
 	.stack {
-		margin-top: 2.5rem;
+		margin-top: 2rem;
+		padding-top: 1.5rem;
+		border-top: 1px solid var(--border);
 	}
 
 	.stack__title {
 		font-family: var(--font-mono);
-		font-size: 0.75rem;
-		letter-spacing: 0.14em;
+		font-size: 0.6875rem;
+		font-weight: 500;
+		letter-spacing: 0.12em;
 		text-transform: uppercase;
 		color: var(--text-faint);
-		margin-bottom: 0.9rem;
 	}
 
 	.stack__chips {
@@ -169,6 +251,6 @@ import ArchitectureDiagram from './ArchitectureDiagram.astro';
 		flex-wrap: wrap;
 		gap: 0.5rem;
 		list-style: none;
-		margin: 0;
+		margin-top: 0.9rem;
 	}
 </style>

@@ -9,14 +9,16 @@
 
 <figure class="diagram">
 	<div class="scroll-x">
-		<svg viewBox="0 0 940 340" role="img" aria-labelledby="archTitle archDesc">
+		<svg viewBox="0 0 940 400" role="img" aria-labelledby="archTitle archDesc">
 			<title id="archTitle">MadeForSeconds architecture</title>
 			<desc id="archDesc">
 				Browsers reach a static React bundle on Cloudflare Pages, which calls a FastAPI
-				service on Google Cloud Run. Claude connects to the same Cloud Run service
-				directly as an MCP client. Cloud Run reads and writes Firestore, Cloud Storage,
-				and Secret Manager, and integrates with WorkOS AuthKit for OAuth 2.1, Google
-				Identity Platform, Stripe, and Upstash Redis.
+				service on Google Cloud Run. Claude connects to that same Cloud Run service
+				directly as an MCP client. One service handles the browser API, the MCP
+				endpoint, and the Sous Chef assistant. Cloud Run reads and writes Firestore,
+				Cloud Storage, and Secret Manager, and integrates with WorkOS AuthKit for
+				OAuth 2.1, the Anthropic API over Workload Identity Federation, Google Identity
+				Platform, Stripe, and Upstash Redis.
 			</desc>
 
 			<defs>
@@ -35,16 +37,16 @@
 
 			<!-- ── Panels ─────────────────────────────────────────────── -->
 			<text class="ptitle" x="16" y="30">Clients</text>
-			<rect class="panel" x="16" y="40" width="150" height="270" rx="10"></rect>
+			<rect class="panel" x="16" y="40" width="150" height="330" rx="10"></rect>
 
 			<text class="ptitle" x="206" y="30">Cloudflare</text>
-			<rect class="panel" x="206" y="40" width="176" height="270" rx="10"></rect>
+			<rect class="panel" x="206" y="40" width="176" height="330" rx="10"></rect>
 
 			<text class="ptitle" x="422" y="30">Google Cloud — Terraform-managed</text>
-			<rect class="panel" x="422" y="40" width="250" height="270" rx="10"></rect>
+			<rect class="panel" x="422" y="40" width="250" height="330" rx="10"></rect>
 
 			<text class="ptitle" x="712" y="30">External services</text>
-			<rect class="panel" x="712" y="40" width="204" height="270" rx="10"></rect>
+			<rect class="panel" x="712" y="40" width="204" height="330" rx="10"></rect>
 
 			<!-- ── Edges (drawn under the nodes) ──────────────────────── -->
 			<path class="edge" d="M 156 127 H 214" marker-end="url(#arrowhead)"></path>
@@ -55,7 +57,7 @@
 				d="M 156 207 H 392 Q 400 207 400 199 V 151 Q 400 143 408 143 H 428"
 				marker-end="url(#arrowhead)"
 			></path>
-			<path class="edge" d="M 547 154 V 168" marker-end="url(#arrowhead)"></path>
+			<path class="edge" d="M 547 176 V 192" marker-end="url(#arrowhead)"></path>
 
 			<!-- ── Nodes ──────────────────────────────────────────────── -->
 			<rect class="node" x="32" y="100" width="118" height="54" rx="8"></rect>
@@ -69,35 +71,40 @@
 			<text class="label" x="294" y="125">Pages</text>
 			<text class="sub" x="294" y="142">static React · CSP · HSTS</text>
 
-			<rect class="node node--accent" x="436" y="100" width="222" height="54" rx="8"></rect>
-			<text class="label" x="547" y="125">Cloud Run</text>
-			<text class="sub" x="547" y="142">FastAPI · scales to zero</text>
+			<rect class="node node--accent" x="436" y="100" width="222" height="76" rx="8"></rect>
+			<text class="label" x="547" y="126">Cloud Run</text>
+			<text class="sub" x="547" y="143">FastAPI · scales to zero</text>
+			<text class="sub" x="547" y="160">API · MCP · Sous Chef</text>
 
-			<rect class="subpanel" x="436" y="176" width="222" height="122" rx="8"></rect>
-			<rect class="node" x="448" y="186" width="198" height="30" rx="6"></rect>
-			<text class="label" x="547" y="206">Firestore</text>
-			<rect class="node" x="448" y="222" width="198" height="30" rx="6"></rect>
-			<text class="label" x="547" y="242">Cloud Storage</text>
-			<rect class="node" x="448" y="258" width="198" height="30" rx="6"></rect>
-			<text class="label" x="547" y="278">Secret Manager</text>
+			<rect class="subpanel" x="436" y="200" width="222" height="158" rx="8"></rect>
+			<rect class="node" x="448" y="212" width="198" height="34" rx="6"></rect>
+			<text class="label" x="547" y="234">Firestore</text>
+			<rect class="node" x="448" y="256" width="198" height="34" rx="6"></rect>
+			<text class="label" x="547" y="278">Cloud Storage</text>
+			<rect class="node" x="448" y="300" width="198" height="34" rx="6"></rect>
+			<text class="label" x="547" y="322">Secret Manager</text>
 
-			<rect class="node" x="726" y="100" width="176" height="54" rx="8"></rect>
-			<text class="label" x="814" y="125">WorkOS AuthKit</text>
-			<text class="sub" x="814" y="142">OAuth 2.1</text>
+			<rect class="node" x="726" y="100" width="176" height="50" rx="8"></rect>
+			<text class="label" x="814" y="120">WorkOS AuthKit</text>
+			<text class="sub" x="814" y="137">OAuth 2.1</text>
 
-			<rect class="node" x="726" y="180" width="176" height="34" rx="6"></rect>
-			<text class="label" x="814" y="202">Identity Platform</text>
+			<rect class="node" x="726" y="158" width="176" height="50" rx="8"></rect>
+			<text class="label" x="814" y="178">Anthropic API</text>
+			<text class="sub" x="814" y="195">Workload Identity Federation</text>
 
-			<rect class="node" x="726" y="224" width="176" height="34" rx="6"></rect>
-			<text class="label" x="814" y="246">Stripe</text>
+			<rect class="node" x="726" y="216" width="176" height="30" rx="6"></rect>
+			<text class="label" x="814" y="235">Identity Platform</text>
 
-			<rect class="node" x="726" y="268" width="176" height="34" rx="6"></rect>
-			<text class="label" x="814" y="290">Upstash Redis</text>
+			<rect class="node" x="726" y="254" width="176" height="30" rx="6"></rect>
+			<text class="label" x="814" y="273">Stripe</text>
+
+			<rect class="node" x="726" y="292" width="176" height="30" rx="6"></rect>
+			<text class="label" x="814" y="311">Upstash Redis</text>
 		</svg>
 	</div>
 	<figcaption>
-		Static assets served from the Cloudflare edge; a single Cloud Run service backs both the
-		browser API and the agent-facing MCP endpoint.
+		Static assets served from the Cloudflare edge; a single Cloud Run service backs the
+		browser API, the agent-facing MCP endpoint, and the Sous Chef assistant.
 	</figcaption>
 </figure>
 
