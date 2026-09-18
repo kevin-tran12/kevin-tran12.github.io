@@ -1,0 +1,55 @@
+---
+import { approach } from '../data/site';
+---
+
+<section id="approach" class="section">
+	<div class="wrap">
+		<div class="section-head">
+			<span class="eyebrow">02 — How I work</span>
+		</div>
+
+		<ul class="approach">
+			{
+				approach.map((item) => (
+					<li class="card item">
+						<h3>{item.title}</h3>
+						<p>{item.body}</p>
+					</li>
+				))
+			}
+		</ul>
+	</div>
+</section>
+
+<style>
+	.approach {
+		list-style: none;
+		margin: 0;
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+		gap: 1rem;
+	}
+
+	/* An odd number of cards leaves the last one stranded next to an empty
+	   cell; span it instead. Self-disables at an even count. */
+	.item:last-child:nth-child(odd) {
+		grid-column: 1 / -1;
+	}
+
+	.item h3 {
+		font-size: 1.0625rem;
+		/* A short accent rule in place of the numeric index these cards used to
+		   carry — the section eyebrow is already numbered, and two numbering
+		   schemes on one screen read as a mistake. */
+		padding-top: 0.9rem;
+		border-top: 2px solid var(--accent);
+		display: inline-block;
+	}
+
+	.item p {
+		margin-top: 0.6rem;
+		color: var(--text-dim);
+		font-size: 0.9rem;
+		line-height: 1.65;
+	}
+</style>

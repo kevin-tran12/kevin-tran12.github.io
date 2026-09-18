@@ -1,89 +1,160 @@
 ---
-import { hero, contact } from '../data/site';
-
-const github = contact.socials.find((s) => s.name === 'GitHub');
+import { hero, stats } from '../data/site';
 ---
 
 <section id="top" class="hero">
-	<div class="wrap hero__inner">
-		<p class="hero__role eyebrow">{hero.role}</p>
-		<h1>{hero.name}</h1>
-		<p class="hero__summary lede">{hero.summary}</p>
+	<div class="wrap">
+		<p class="hero__meta">
+			<span class="hero__role">{hero.role}</span>
+			<span class="hero__dot" aria-hidden="true"></span>
+			<span class="hero__loc">{hero.location}</span>
+		</p>
 
-		<ul class="hero__facts">
-			<li class="chip">
-				<span class="dot" aria-hidden="true"></span>
-				{hero.location}
-			</li>
-			{hero.badges.map((badge) => <li class="chip">{badge}</li>)}
-		</ul>
+		<h1 class="hero__headline">{hero.headline}</h1>
+
+		<p class="hero__summary">{hero.summary}</p>
 
 		<div class="hero__actions">
-			<a class="btn btn--primary" href={`mailto:${contact.email}`}>Get in touch</a>
+			<a class="btn btn--primary" href="#contact">Get in touch</a>
 			<a class="btn" href="#work">See the work</a>
-			{github && <a class="btn" href={github.url} rel="me noopener">GitHub</a>}
 		</div>
+
+		<ul class="hero__badges">
+			{hero.badges.map((badge) => <li class="chip">{badge}</li>)}
+		</ul>
+	</div>
+
+	{/* Evidence immediately after the claim, before any further prose. */}
+	<div class="wrap">
+		<dl class="stats">
+			{
+				stats.map((stat) => (
+					<div class="stat">
+						<dt class="stat__value">{stat.value}</dt>
+						<dd class="stat__label">{stat.label}</dd>
+					</div>
+				))
+			}
+		</dl>
 	</div>
 </section>
 
 <style>
 	.hero {
-		position: relative;
-		padding-block: clamp(4rem, 11vw, 8.5rem) clamp(3.5rem, 9vw, 7rem);
-		overflow: hidden;
+		padding-block: clamp(3.5rem, 8vw, 6rem) 0;
 	}
 
-	/* Soft accent wash behind the name — decorative only. */
-	.hero::before {
-		content: '';
-		position: absolute;
-		inset: -40% 0 auto -10%;
-		height: 34rem;
-		background: radial-gradient(
-			55% 60% at 30% 50%,
-			var(--accent-soft) 0%,
-			transparent 70%
-		);
-		pointer-events: none;
-	}
-
-	.hero__inner {
-		position: relative;
+	.hero__meta {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		font-family: var(--font-mono);
+		font-size: 0.75rem;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
 	}
 
 	.hero__role {
-		margin-bottom: 1rem;
+		color: var(--accent);
+	}
+
+	.hero__dot {
+		width: 3px;
+		height: 3px;
+		border-radius: 999px;
+		background: var(--border-strong);
+	}
+
+	.hero__loc {
+		color: var(--text-faint);
+	}
+
+	.hero__headline {
+		margin-top: 1.5rem;
+		max-width: 20ch;
 	}
 
 	.hero__summary {
+		margin-top: 1.4rem;
 		max-width: 46ch;
-		margin-top: 1.5rem;
-	}
-
-	.hero__facts {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.5rem;
-		list-style: none;
-		margin: 1.75rem 0 0;
-	}
-
-	.hero__facts .chip {
-		white-space: normal;
-	}
-
-	.dot {
-		width: 7px;
-		height: 7px;
-		border-radius: 50%;
-		background: var(--accent);
-		flex: none;
+		font-size: clamp(1.0625rem, 1rem + 0.4vw, 1.3125rem);
+		line-height: 1.6;
+		color: var(--text-dim);
 	}
 
 	.hero__actions {
 		display: flex;
 		flex-wrap: wrap;
-		gap: 0.65rem;
-		margin-top: 2.25rem;
+		gap: 0.75rem;
+		margin-top: 2rem;
+	}
+
+	.hero__badges {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		list-style: none;
+		margin-top: 1.5rem;
+	}
+
+	/* Three cells divided by hairlines rather than boxed as cards — the
+	   rules read as a data strip, boxes would read as three more cards. */
+	.stats {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		margin-top: clamp(3rem, 6vw, 4.5rem);
+		border-top: 1px solid var(--border);
+		border-bottom: 1px solid var(--border);
+	}
+
+	.stat {
+		padding: 1.6rem 1.75rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.35rem;
+	}
+
+	.stat:first-child {
+		padding-inline-start: 0;
+	}
+
+	.stat:last-child {
+		padding-inline-end: 0;
+	}
+
+	.stat + .stat {
+		border-inline-start: 1px solid var(--border);
+	}
+
+	.stat__value {
+		font-family: var(--font-display);
+		font-size: clamp(1.75rem, 1.4rem + 1.4vw, 2.125rem);
+		font-weight: 700;
+		letter-spacing: -0.035em;
+		line-height: 1.1;
+	}
+
+	.stat__label {
+		margin: 0;
+		font-size: 0.875rem;
+		line-height: 1.45;
+		color: var(--text-faint);
+	}
+
+	/* Below this the three columns crush the labels to two words a line. */
+	@media (max-width: 46rem) {
+		.stats {
+			grid-template-columns: 1fr;
+		}
+
+		.stat {
+			padding-inline: 0;
+			padding-block: 1.1rem;
+		}
+
+		.stat + .stat {
+			border-inline-start: 0;
+			border-top: 1px solid var(--border);
+		}
 	}
 </style>

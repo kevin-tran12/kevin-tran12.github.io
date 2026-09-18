@@ -5,8 +5,7 @@ import { engagements, valueProposition, credentials } from '../data/site';
 <section id="experience" class="section">
 	<div class="wrap">
 		<div class="section-head">
-			<span class="eyebrow">04</span>
-			<h2>Selected engagements & engineering initiatives</h2>
+			<span class="eyebrow">04 — Experience</span>
 		</div>
 
 		<div class="engagements">
@@ -26,6 +25,7 @@ import { engagements, valueProposition, credentials } from '../data/site';
 							{e.initiatives.map((i) => (
 								<li class="initiative">
 									<h4>{i.title}</h4>
+									{i.period && <p class="initiative__period">{i.period}</p>}
 									<p class="initiative__body">{i.body}</p>
 									<p class="initiative__outcome">
 										<span class="initiative__label">Outcome</span>
@@ -120,6 +120,19 @@ import { engagements, valueProposition, credentials } from '../data/site';
 		font-size: 0.9375rem;
 		font-weight: 600;
 		letter-spacing: -0.01em;
+	}
+
+	/* Only the initiatives that span a distinct phase carry one; the rest
+	   inherit the engagement's own date range. */
+	.initiative__period {
+		margin-top: 0.3rem;
+		font-family: var(--font-mono);
+		font-size: 0.6875rem;
+		letter-spacing: 0.1em;
+		/* .engagement__period gets --text-faint, but it is 13px. At 11px that
+		   token lands at ~4.6:1, so this takes the stronger dim token — same
+		   call as the 11px labels in the architecture diagram. */
+		color: var(--text-dim);
 	}
 
 	.initiative__body {
